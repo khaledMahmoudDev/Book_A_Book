@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation.xml"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.bookabook.ui.home.HomeFragment"
+        android:label="home_fragment"
+        tools:layout="@layout/home_fragment" />
+    <fragment
+        android:id="@+id/favouriteBooks"
+        android:name="com.example.bookabook.ui.favouriteBooks.FavouriteBooksFragment"
+        android:label="favourite_books_fragment"
+        tools:layout="@layout/favourite_books_fragment" />
+    <fragment
+        android:id="@+id/myBooks"
+        android:name="com.example.bookabook.ui.myBooks.MyBooksFragment"
+        android:label="my_books_fragment"
+        tools:layout="@layout/my_books_fragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.bookabook.ui.settings.SettingsFragment"
+        android:label="settings_fragment"
+        tools:layout="@layout/settings_fragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.bookabook.ui.profile.ProfileFragment"
+        android:label="profile_fragment"
+        tools:layout="@layout/profile_fragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_myBooks"
+            app:destination="@id/myBooks" />
+        <action
+            android:id="@+id/action_profileFragment_to_favouriteBooks"
+            app:destination="@id/favouriteBooks" />
+    </fragment>
+</navigation>
