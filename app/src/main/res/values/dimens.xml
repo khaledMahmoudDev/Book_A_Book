@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <!-- padding -->
+    <dimen name="editTextPadding">14dp</dimen>
+
     <!-- margins -->
+    <dimen name="margin_Super_tiny">2dp</dimen>
     <dimen name="margin_tiny">4dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_small_normal">12dp</dimen>
 
     <dimen name="margin_normal">16dp</dimen>
     <dimen name="margin_medium">24dp</dimen>
+
     <dimen name="margin_large">32dp</dimen>
     <dimen name="margin_large_extra">40dp</dimen>
     <dimen name="margin_extra">64dp</dimen>
@@ -18,9 +24,29 @@
     <dimen name="text_tiny_tiny">8sp</dimen> <!-- not recommended to use -->
     <dimen name="text_tiny">12sp</dimen>
     <dimen name="text_small">14sp</dimen>
+
     <dimen name="text_normal">17sp</dimen>
     <dimen name="text_medium">20sp</dimen>
+
     <dimen name="text_large">25sp</dimen>
     <dimen name="text_extra">30sp</dimen>
     <dimen name="text_extra_extra">35sp</dimen>
+
+    <!-- radius -->
+    <dimen name="CardRadius">2dp</dimen>
+    <dimen name="CardRadius4">4dp</dimen>
+    <dimen name="EditTextRadius">5dp</dimen>
+    <dimen name="radius8">8dp</dimen>
+
+
+    <!-- width and height -->
+    <dimen name="BookElementWidth">120dp</dimen>
+    <dimen name="pickImagelayout">150dp</dimen>
+    <dimen name="pickImageSmall">60dp</dimen>
+
+    <dimen name="editTextHeightBig">150dp</dimen>
+    <dimen name="editTextHeight">35dp</dimen>
+    <dimen name="ButtonHeight">40dp</dimen>
+
+
 </resources>

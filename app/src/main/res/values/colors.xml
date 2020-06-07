@@ -7,4 +7,9 @@
 
     <color name="yellow100">#fff9c4</color>
     <color name="yellow900">#f57f17</color>
+    <color name="NewGreen">#89E322</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="CardNotAvailableColor">#54000000</color>
 </resources>

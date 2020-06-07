@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.bookabook.R
 import kotlinx.android.synthetic.main.home_fragment.*
 
@@ -29,16 +30,11 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         // TODO: Use the ViewModel
-        homeFragmentChipGroup.check(R.id.homeGroupChipAll)
-        val checkedChipId = homeFragmentChipGroup.checkedChipId // Will return View.NO_ID if singleSelection = false
-        val checkedChipIds = homeFragmentChipGroup.checkedChipIds
-        homeFragmentChipGroup.setOnCheckedChangeListener { group, checkedId ->
-            Toast.makeText(context,"clicked is $checkedId", Toast.LENGTH_LONG).show()
-            // Handle child Chip checked/unchecked
-        }
+
         extended_fab.setOnClickListener {
 
             Toast.makeText(context,"FAB clicked", Toast.LENGTH_LONG).show()
+            this.findNavController().navigate(R.id.action_homeFragment_to_addingBooksFragment)
         }
     }
 

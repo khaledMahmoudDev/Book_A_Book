@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Book A Book</string>
+    <string name="BookElementRatio">h,2:2</string>
 </resources>

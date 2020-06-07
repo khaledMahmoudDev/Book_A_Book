@@ -26,7 +26,7 @@
     </style>
 
     <style name="ThemeOverlay.App.FloatingActionButton" parent="">
-        <item name="colorSecondary">@color/yellow100</item>
+        <item name="colorSecondary">@color/yellowLight</item>
         <item name="colorOnSecondary">@color/yellow900</item>
         <item name="colorOnSurface">@color/yellow900</item>
     </style>
