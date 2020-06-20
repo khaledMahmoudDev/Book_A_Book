@@ -1,206 +1,293 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/yellow100">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:liftOnScroll="true">
+    <data>
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:title="Add Book " />
+        <import type="android.content.Context" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <variable
+            name="addBookViewModel"
+            type="com.example.bookabook.ui.addingBook.AddingBooksViewModel" />
+    </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:background="@color/yellow100">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            app:liftOnScroll="true">
 
-            <RelativeLayout
-                android:id="@+id/AddBookRelativeAddImage"
-                android:layout_width="@dimen/pickImagelayout"
-                android:layout_height="@dimen/pickImagelayout"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:background="@drawable/upload_back_ground"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                style="@style/Widget.MaterialComponents.Toolbar.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:title="Add Book " />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/AddBookRelativeAddImage"
+                    android:layout_width="@dimen/pickImagelayout"
+                    android:layout_height="@dimen/pickImagelayout"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:background="@drawable/upload_back_ground"
+                    android:onClick="@{()-> addBookViewModel.pickImage()}"
+                    app:hideIfTrue="@{addBookViewModel.imageViewVisibality}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/AddBookPickImage"
+                        android:layout_width="@dimen/pickImageSmall"
+                        android:layout_height="@dimen/pickImageSmall"
+                        android:layout_centerInParent="true"
+                        android:tint="@color/yellow900"
+                        app:srcCompat="@drawable/ic_baseline_add_photo" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/AddBookPickImage"
+                        android:layout_centerInParent="true"
+                        android:text="Pick an Image"
+                        android:textColor="@color/yellow900" />
+                </RelativeLayout>
 
                 <ImageView
-                    android:tint="@color/yellow900"
-                    android:id="@+id/AddBookPickImage"
-                    android:layout_width="@dimen/pickImageSmall"
-                    android:layout_height="@dimen/pickImageSmall"
-                    android:layout_centerInParent="true"
-                    app:srcCompat="@drawable/ic_baseline_add_photo" />
+                    android:id="@+id/AddBookAddImageView"
+                    android:layout_width="@dimen/pickImagelayout"
+                    android:layout_height="@dimen/pickImagelayout"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:onClick="@{()-> addBookViewModel.pickImage()}"
+                    android:scaleType="centerCrop"
+                    app:hideIfFalse="@{addBookViewModel.imageViewVisibality}"
+                    app:imageUrl="@{addBookViewModel.addingimageString}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
+                    android:id="@+id/textViewBookName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small_normal"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:text="Book Name"
+                    android:textColor="@color/yellow900"
+                    android:textSize="@dimen/text_medium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/AddBookRelativeAddImage" />
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextBookName"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/editTextHeight"
+                    android:layout_marginStart="@dimen/margin_small_normal"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_small_normal"
+                    android:background="@drawable/edit_text_background"
+                    android:ems="10"
+                    android:hint="Enter Book Name"
+                    android:lines="1"
+                    android:maxLength="20"
+                    android:paddingStart="@dimen/editTextPadding"
+                    android:paddingEnd="@dimen/editTextPadding"
+                    android:text="@={addBookViewModel.addBookTitle}"
+                    android:textColor="@color/yellow900"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="20"
+                    app:error="@{addBookViewModel.bookTitleError}"
+                    app:errorEnabled="true"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewBookName" />
+
+                <TextView
+                    android:id="@+id/textViewBookWriter"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small_normal"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:text="Book Writer"
+                    android:textColor="@color/yellow900"
+                    android:textSize="@dimen/text_medium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextBookName" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextBookWriter"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/editTextHeight"
+                    android:layout_marginStart="@dimen/margin_small_normal"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_small_normal"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="Enter Book Writer Name"
+                    android:lines="1"
+                    android:maxLength="20"
+                    android:paddingStart="@dimen/editTextPadding"
+                    android:paddingEnd="@dimen/editTextPadding"
+                    android:text="@={addBookViewModel.addBookWriter}"
+                    android:textColor="@color/yellow900"
+                    app:counterMaxLength="20"
+                    app:error="@{addBookViewModel.bookWriterError}"
+                    app:errorEnabled="true"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewBookWriter" />
+
+                <TextView
+                    android:id="@+id/textViewDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small_normal"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:text="Book Description"
+                    android:textColor="@color/yellow900"
+                    android:textSize="@dimen/text_medium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextBookWriter" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextBookDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/editTextHeightBig"
+                    android:layout_marginStart="@dimen/margin_small_normal"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_small_normal"
+                    android:background="@drawable/edit_text_background"
+                    android:gravity="top"
+                    android:hint="Enter Book Description"
+                    android:padding="@dimen/editTextPadding"
+                    android:paddingStart="@dimen/editTextPadding"
+                    android:paddingEnd="@dimen/editTextPadding"
+                    android:text="@={addBookViewModel.addBookDescription}"
+                    android:textColor="@color/yellow900"
+                    app:error="@{addBookViewModel.descriptionError}"
+                    app:errorEnabled="true"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
+
+                <TextView
+                    android:id="@+id/textViewCategories"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small_normal"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:text="Select Category"
+                    android:textColor="@color/yellow900"
+                    android:textSize="@dimen/text_medium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextBookDescription" />
+
+                <RelativeLayout
+                    android:id="@+id/SelectCategoryLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small_normal"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_small_normal"
+                    android:background="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewCategories">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/AddBookHomeFragmentChipGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:selectionRequired="true">
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/AddBookAddCategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/AddBookPickImage"
-                    android:layout_centerInParent="true"
-                    android:text="Pick an Image"
-                    android:textColor="@color/yellow900"/>
-            </RelativeLayout>
+                    android:layout_marginStart="@dimen/margin_small_normal"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_small_normal"
+                    android:gravity="center_horizontal"
+                    android:onClick="@{()-> addBookViewModel.showDialog(context)}"
+                    android:text="Add another category"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/SelectCategoryLayout" />
 
-            <TextView
-                android:id="@+id/textViewBookName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_small_normal"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:text="Book Name"
-                android:textColor="@color/yellow900"
-                android:textSize="@dimen/text_medium"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/AddBookRelativeAddImage" />
-
-            <EditText
-                android:id="@+id/editTextBookName"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/editTextHeight"
-                android:layout_marginStart="@dimen/margin_small_normal"
-                android:layout_marginTop="@dimen/margin_small"
-                android:layout_marginEnd="@dimen/margin_small_normal"
-                android:background="@drawable/edit_text_background"
-                android:hint="Enter Book Name"
-                android:paddingStart="@dimen/editTextPadding"
-                android:paddingEnd="@dimen/editTextPadding"
-                android:textColor="@color/yellow900"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewBookName" />
-            <TextView
-                android:id="@+id/textViewBookWriter"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_small_normal"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:text="Book Writer"
-                android:textColor="@color/yellow900"
-                android:textSize="@dimen/text_medium"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextBookName" />
-
-            <EditText
-                android:id="@+id/editTextBookWriter"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/editTextHeight"
-                android:layout_marginStart="@dimen/margin_small_normal"
-                android:layout_marginTop="@dimen/margin_small"
-                android:layout_marginEnd="@dimen/margin_small_normal"
-                android:background="@drawable/edit_text_background"
-                android:hint="Enter Book Writer Name"
-                android:paddingStart="@dimen/editTextPadding"
-                android:paddingEnd="@dimen/editTextPadding"
-                android:textColor="@color/yellow900"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewBookWriter" />
-
-            <TextView
-
-                android:id="@+id/textViewDescription"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_small_normal"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:text="Book Description"
-                android:textColor="@color/yellow900"
-                android:textSize="@dimen/text_medium"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextBookWriter" />
-
-            <EditText
-                android:id="@+id/editTextBookDescription"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/editTextHeightBig"
-                android:layout_marginStart="@dimen/margin_small_normal"
-                android:layout_marginTop="@dimen/margin_small"
-                android:layout_marginEnd="@dimen/margin_small_normal"
-                android:background="@drawable/edit_text_background"
-                android:gravity="top"
-                android:textColor="@color/yellow900"
-                android:hint="Enter Book Description"
-                android:padding="@dimen/editTextPadding"
-                android:paddingStart="@dimen/editTextPadding"
-                android:paddingEnd="@dimen/editTextPadding"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
-
-            <TextView
-                android:id="@+id/textViewCategories"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_small_normal"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:text="Select Category"
-                android:textColor="@color/yellow900"
-                android:textSize="@dimen/text_medium"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextBookDescription" />
-
-            <RelativeLayout
-                android:id="@+id/SelectCategoryLayout"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="@dimen/margin_small_normal"
-                android:layout_marginTop="@dimen/margin_small"
-                android:layout_marginEnd="@dimen/margin_small_normal"
-                android:background="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewCategories">
-
-            </RelativeLayout>
-
-            <Button
-                app:layout_constraintCircleRadius="@dimen/CardRadius4"
-                android:id="@+id/AddButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_small_normal"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:layout_marginEnd="@dimen/margin_small_normal"
-                android:layout_marginBottom="@dimen/margin_medium"
-                android:backgroundTint="@color/yellowLight"
-                android:text="Add Book"
-                android:textColor="@color/yellow900"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/SelectCategoryLayout" />
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_tiny"
+                    app:layout_constraintBottom_toBottomOf="@+id/AddBookAddCategory"
+                    app:layout_constraintEnd_toStartOf="@+id/AddBookAddCategory"
+                    app:layout_constraintTop_toTopOf="@+id/AddBookAddCategory"
+                    app:srcCompat="@drawable/ic_baseline_add_24" />
 
 
+                <Button
+                    android:id="@+id/AddButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small_normal"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_marginEnd="@dimen/margin_small_normal"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                    android:backgroundTint="@color/yellowLight"
+                    android:enabled="@{addBookViewModel.addBtnEnable}"
+                    android:onClick="@{()-> addBookViewModel.addBtnClick()}"
+                    android:text="Add Book"
+                    android:textColor="@color/yellow900"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintCircleRadius="@dimen/CardRadius4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/AddBookAddCategory" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+        </androidx.core.widget.NestedScrollView>
 
-    </androidx.core.widget.NestedScrollView>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:hideIfFalse="@{addBookViewModel.progressBarVisability}" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

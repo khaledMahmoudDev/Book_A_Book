@@ -1,7 +1,46 @@
 package com.example.bookabook.ui.home
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.bookabook.data.DownloadBooksCallBack
+import com.example.bookabook.data.FireBaseRepo
+import com.example.bookabook.model.BooksModel
 
 class HomeViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+
+    private var _bookList = MutableLiveData<ArrayList<BooksModel>>()
+        val booklist : LiveData<ArrayList<BooksModel>>
+        get() = _bookList
+
+
+    var progressBarVisability = MutableLiveData<Boolean>(false)
+
+    init {
+        getBooksList()
+    }
+
+    private fun getBooksList(){
+        progressBarVisability.value = true
+        FireBaseRepo.getBooks(DownloadBooksCallBack {
+            _bookList.value = it
+            progressBarVisability.value = false
+        })
+    }
+
+
+    private var _navigateToLogIn =MutableLiveData<Boolean>()
+    val navigateToLogIn : LiveData<Boolean>
+        get() = _navigateToLogIn
+
+    fun navigateToLogIn()
+    {
+        _navigateToLogIn.value = true
+    }
+
+    fun navigateToLogInComplete()
+    {
+        _navigateToLogIn.value = false
+    }
+
 }

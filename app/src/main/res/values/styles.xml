@@ -6,10 +6,12 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="extendedFloatingActionButtonStyle">@style/Widget.App.ExtendedFloatingActionButton</item>
-        <item name="floatingActionButtonStyle">@style/Widget.App.FloatingActionButton</item>
+
+        <item name="chipStyle">@style/Widget.MaterialComponents.Chip.Choice</item>
 
     </style>
+
+
 
     <style name="Widget.App.ExtendedFloatingActionButton" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.FloatingActionButton</item>

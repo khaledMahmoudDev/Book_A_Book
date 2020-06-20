@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_addingBooksFragment"
             app:destination="@id/addingBooksFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
     </fragment>
     <fragment
         android:id="@+id/favouriteBooks"
@@ -40,10 +43,33 @@
         <action
             android:id="@+id/action_profileFragment_to_favouriteBooks"
             app:destination="@id/favouriteBooks" />
+        <action
+            android:id="@+id/action_profileFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
     </fragment>
     <fragment
         tools:layout="@layout/adding_books_fragment"
         android:id="@+id/addingBooksFragment"
         android:name="com.example.bookabook.ui.addingBook.AddingBooksFragment"
-        android:label="AddingBooksFragment" />
+        android:label="AddingBooksFragment" >
+        <action
+            android:id="@+id/action_addingBooksFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/log_in_fragment"
+        android:id="@+id/logInFragment"
+        android:name="com.example.bookabook.ui.userAuthentication.logIn.LogInFragment"
+        android:label="LogInFragment" >
+        <action
+            android:id="@+id/action_logInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/sign_up_fragment"
+        android:id="@+id/signUpFragment"
+        android:name="com.example.bookabook.ui.userAuthentication.signUp.SignUpFragment"
+        android:label="SignUpFragment" />
 </navigation>

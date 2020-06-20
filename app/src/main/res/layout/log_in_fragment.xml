@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="logInViewModel"
+            type="com.example.bookabook.ui.userAuthentication.logIn.LogInViewModel" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/yellow100"
+        tools:context=".ui.userAuthentication.signUp.SignUpFragment">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:liftOnScroll="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                style="@style/Widget.MaterialComponents.Toolbar.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:title="Log In" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/signUpLogoHeight"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:src="@drawable/share_free_book"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/editTextTextEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/editTextHeight"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_extra"
+                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:background="@drawable/edit_text_background"
+                    android:ems="10"
+                    android:hint="Email Address"
+                    android:lines="1"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="@dimen/editTextPadding"
+                    android:paddingEnd="@dimen/editTextPadding"
+                    android:text="@={logInViewModel.userEmail}"
+                    app:error="@{logInViewModel.userEmailError}"
+                    app:errorEnabled="true"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+                <EditText
+                    android:text="@={logInViewModel.userPassword}"
+                    app:error="@{logInViewModel.userPasswordError}"
+                    app:errorEnabled="true"
+                    app:hintEnabled="false"
+                    android:id="@+id/editTextTextPassword"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/editTextHeight"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:background="@drawable/edit_text_background"
+                    android:ems="10"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:lines="1"
+                    android:paddingStart="@dimen/editTextPadding"
+                    android:paddingEnd="@dimen/editTextPadding"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextTextEmail" />
+
+                <TextView
+                    android:id="@+id/ForgetPasswordTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="Forgot Password?"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:backgroundTint="@color/yellowLight"
+                    android:text="LogIn"
+                    android:textColor="@color/yellow900"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ForgetPasswordTextView" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginBottom="@dimen/margin_large"
+                    android:onClick="@{()-> logInViewModel.RegisterNow()}"
+                    android:text="Not Registered? Sign Up"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/button"
+                    app:layout_constraintStart_toStartOf="@+id/button"
+                    app:layout_constraintTop_toBottomOf="@+id/button" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

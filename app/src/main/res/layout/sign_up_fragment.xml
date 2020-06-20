@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="signUpViewModel"
+            type="com.example.bookabook.ui.userAuthentication.signUp.SignUpViewModel" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/yellow100"
+        tools:context=".ui.userAuthentication.signUp.SignUpFragment">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:liftOnScroll="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                style="@style/Widget.MaterialComponents.Toolbar.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:title="Register" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/registerTextView"
+                    style="@style/TextAppearance.AppCompat.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:gravity="center"
+                    android:text="Register to be able of sharing your books"
+                    android:textSize="32sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputEditText
+
+                    android:id="@+id/editTextTextUserName"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/editTextHeight"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_extra"
+                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:background="@drawable/edit_text_background"
+                    android:ems="10"
+                    android:hint="Full name"
+                    android:inputType="textPersonName"
+                    android:lines="1"
+                    android:maxLength="20"
+                    android:paddingStart="@dimen/editTextPadding"
+                    android:paddingEnd="@dimen/editTextPadding"
+                    android:text="@={signUpViewModel.addUserName}"
+                    android:textColor="@color/yellow900"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="20"
+                    app:error="@{signUpViewModel.userNameError}"
+                    app:errorEnabled="true"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/registerTextView" />
+
+                <EditText
+                    android:id="@+id/editTextTextUseEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/editTextHeight"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:background="@drawable/edit_text_background"
+                    android:ems="10"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:lines="1"
+                    android:paddingStart="@dimen/editTextPadding"
+                    android:paddingEnd="@dimen/editTextPadding"
+                    android:text="@={signUpViewModel.addUserEmail}"
+                    android:textColor="@color/yellow900"
+                    app:counterEnabled="true"
+                    app:error="@{signUpViewModel.userEmailError}"
+                    app:errorEnabled="true"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextTextUserName"
+                    app:layout_constraintStart_toStartOf="@+id/editTextTextUserName"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextTextUserName" />
+
+                <EditText
+                    android:id="@+id/editTextTextUsePhoneNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/editTextHeight"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:background="@drawable/edit_text_background"
+                    android:ems="10"
+                    android:hint="Phone Number"
+                    android:inputType="phone"
+                    android:lines="1"
+                    android:paddingStart="@dimen/editTextPadding"
+                    android:paddingEnd="@dimen/editTextPadding"
+                    android:text="@={signUpViewModel.addUserPhone}"
+                    android:textColor="@color/yellow900"
+                    app:counterEnabled="true"
+                    app:error="@{signUpViewModel.userPhoneError}"
+                    app:errorEnabled="true"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextTextUseEmail"
+                    app:layout_constraintStart_toStartOf="@+id/editTextTextUseEmail"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextTextUseEmail" />
+
+                <EditText
+                    android:id="@+id/editTextTextUsePassword"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/editTextHeight"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:background="@drawable/edit_text_background"
+                    android:ems="10"
+                    android:hint="password"
+                    android:inputType="textPassword"
+                    android:lines="1"
+                    android:paddingStart="@dimen/editTextPadding"
+                    android:paddingEnd="@dimen/editTextPadding"
+                    android:text="@={signUpViewModel.addUserPassword}"
+                    android:textColor="@color/yellow900"
+                    app:counterEnabled="true"
+                    app:error="@{signUpViewModel.userPasswordError}"
+                    app:errorEnabled="true"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextTextUsePhoneNumber"
+                    app:layout_constraintStart_toStartOf="@+id/editTextTextUsePhoneNumber"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextTextUsePhoneNumber" />
+
+                <Button
+                    android:id="@+id/SignUpRegisterButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small_normal"
+                    android:layout_marginTop="@dimen/margin_large_extra"
+                    android:layout_marginEnd="@dimen/margin_small_normal"
+                    android:layout_marginBottom="@dimen/margin_medium"
+                    android:backgroundTint="@color/yellowLight"
+                    android:text="Register"
+                    android:textColor="@color/yellow900"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintCircleRadius="@dimen/CardRadius4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextTextUsePassword" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
