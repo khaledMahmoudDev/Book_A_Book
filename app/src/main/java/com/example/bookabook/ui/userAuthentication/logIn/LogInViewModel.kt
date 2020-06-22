@@ -26,6 +26,9 @@ class LogInViewModel : ViewModel() {
     }
 
 
+    var progressBarVisability = MutableLiveData<Boolean>(false)
+    var addBtnEnable = MutableLiveData<Boolean>(true)
+
     private var _navigateToRegister =MutableLiveData<Boolean>()
     val navigateToRegister : LiveData<Boolean>
     get() = _navigateToRegister
@@ -39,4 +42,11 @@ class LogInViewModel : ViewModel() {
     {
         _navigateToRegister.value = false
     }
+}
+
+enum class LogInStateState {
+    EmailNotValid,
+    PasswordNotValid,
+    EmailOrPasswordAreNotCorrect,
+    LoggedIn
 }

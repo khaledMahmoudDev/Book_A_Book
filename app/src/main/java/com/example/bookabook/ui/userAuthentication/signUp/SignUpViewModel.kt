@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.example.bookabook.data.FireBaseRepo
+import com.example.bookabook.data.RegisterCallBack
+import com.example.bookabook.data.RegisterState
 import com.example.bookabook.utils.Validation
 import com.example.bookabook.utils.ValidationMSG
 
@@ -34,12 +37,87 @@ class SignUpViewModel : ViewModel() {
     }
 
     var addUserPassword = MutableLiveData<String>()
-    private val isUserPasswordValid: LiveData<ValidationMSG> = Transformations.map(addUserPassword) {
-        Validation.validatePassword(it)
-    }
+    private val isUserPasswordValid: LiveData<ValidationMSG> =
+        Transformations.map(addUserPassword) {
+            Validation.validatePassword(it)
+        }
     val userPasswordError: LiveData<String> = Transformations.map(isUserPasswordValid) {
         Validation.validationResult(it)
     }
 
 
+    var progressBarVisability = MutableLiveData<Boolean>(false)
+    var registerBtnEnable = MutableLiveData<Boolean>(true)
+
+    private val _registerState = MutableLiveData<SignUpStateState>()
+    val registerState: LiveData<SignUpStateState>
+        get() = _registerState
+
+
+
+    fun registerNow() {
+        when {
+            isUserEmailValid.value != ValidationMSG.Good -> {
+                _registerState.value = SignUpStateState.EmailNotValid
+                return
+            }
+            isUserNameValid.value != ValidationMSG.Good -> {
+                _registerState.value = SignUpStateState.UserNameNotValid
+                return
+            }
+            isUserPhoneValid.value != ValidationMSG.Good -> {
+                _registerState.value = SignUpStateState.PhoneNumberNotValid
+                return
+            }
+            isUserPasswordValid.value != ValidationMSG.Good -> {
+                _registerState.value = SignUpStateState.PasswordNotValid
+                return
+            }
+            else -> {
+                progressBarVisability.value = true
+                registerBtnEnable.value = false
+                FireBaseRepo.register(
+                    email = addUserEmail.value!!,
+                    password = addUserPassword.value!!,
+                    phoneNumber = addUserPhone.value!!,
+                    name = addUserName.value!!,
+                    registerCallBack = RegisterCallBack {
+                        when (it) {
+                            RegisterState.RegisteredSuccessfully ->
+                            {
+
+                                _registerState.value = SignUpStateState.Registered
+                            }
+                            RegisterState.FailedToSignUp ->
+                            {
+
+                                _registerState.value = SignUpStateState.FailedToRegister
+                            }
+                            RegisterState.ErrorEmailOrPassword ->
+                            {
+
+                                _registerState.value = SignUpStateState.PasswordOrEmailError
+                            }
+                        }
+
+                        progressBarVisability.value = false
+                        registerBtnEnable.value = true
+                    }
+                )
+
+            }
+        }
+    }
+
+
+}
+
+enum class SignUpStateState {
+    UserNameNotValid,
+    EmailNotValid,
+    PasswordNotValid,
+    PhoneNumberNotValid,
+    FailedToRegister,
+    Registered,
+    PasswordOrEmailError
 }

@@ -93,6 +93,9 @@ class AddingBooksFragment : Fragment() {
                     toastMessage = "Book Uploaded Successfully"
                     this.findNavController().navigate(R.id.action_addingBooksFragment_to_homeFragment)
                 }
+                else ->{
+                    toastMessage = "UnExpected Error Try Again"
+                }
             }
             Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show()
 
