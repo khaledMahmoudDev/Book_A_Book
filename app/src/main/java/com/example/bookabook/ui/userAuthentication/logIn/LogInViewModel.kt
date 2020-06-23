@@ -19,6 +19,32 @@ import com.example.bookabook.utils.ValidationMSG
 
 class LogInViewModel : ViewModel() {
 
+    enum class AuthenticationState {
+        UNAUTHENTICATED,        // Initial state, the user needs to authenticate
+        AUTHENTICATED  ,        // The user has authenticated successfully
+        INVALID_AUTHENTICATION  // Authentication failed
+    }
+
+    private fun isLoggedIn() = FireBaseRepo.isLoggedIn()
+
+    val authenticationState = MutableLiveData<AuthenticationState>()
+
+    fun refuseAuthentication() {
+        authenticationState.value = AuthenticationState.UNAUTHENTICATED
+    }
+
+    init {
+
+        if (isLoggedIn())
+        {
+            authenticationState.value = AuthenticationState.AUTHENTICATED
+        }else
+        {
+            authenticationState.value = AuthenticationState.UNAUTHENTICATED
+        }
+    }
+
+
     var userEmail = MutableLiveData<String>()
     private val isEmailValid: LiveData<ValidationMSG> = Transformations.map(userEmail) {
         Validation.validateEmail(it)
@@ -60,15 +86,19 @@ class LogInViewModel : ViewModel() {
                         when (it) {
                             LogInState.EmailIsNotVerified -> {
                                 _logInState.value = LogInStateState.EmailIsNotVerified
+                                authenticationState.value = AuthenticationState.INVALID_AUTHENTICATION
                             }
                             LogInState.FailedToLogIn -> {
                                 _logInState.value = LogInStateState.FAiledToLogIn
+                                authenticationState.value = AuthenticationState.INVALID_AUTHENTICATION
                             }
                             LogInState.EmailOrPasswordError -> {
                                 _logInState.value = LogInStateState.EmailOrPasswordIsNotCorrect
+                                authenticationState.value = AuthenticationState.INVALID_AUTHENTICATION
                             }
                             LogInState.LoggedInSuccessfully -> {
                                 _logInState.value = LogInStateState.LoggedIn
+                                authenticationState.value = AuthenticationState.AUTHENTICATED
                             }
                         }
                         progressBarVisability.value = false

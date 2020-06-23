@@ -9,13 +9,10 @@
         android:id="@+id/homeFragment"
         android:name="com.example.bookabook.ui.home.HomeFragment"
         android:label="home_fragment"
-        tools:layout="@layout/home_fragment" >
+        tools:layout="@layout/home_fragment">
         <action
             android:id="@+id/action_homeFragment_to_addingBooksFragment"
             app:destination="@id/addingBooksFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
     </fragment>
     <fragment
         android:id="@+id/favouriteBooks"
@@ -36,55 +33,39 @@
         android:id="@+id/profileFragment"
         android:name="com.example.bookabook.ui.profile.ProfileFragment"
         android:label="profile_fragment"
-        tools:layout="@layout/profile_fragment" >
+        tools:layout="@layout/profile_fragment">
         <action
             android:id="@+id/action_profileFragment_to_myBooks"
             app:destination="@id/myBooks" />
         <action
             android:id="@+id/action_profileFragment_to_favouriteBooks"
             app:destination="@id/favouriteBooks" />
-        <action
-            android:id="@+id/action_profileFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
     </fragment>
     <fragment
-        tools:layout="@layout/adding_books_fragment"
         android:id="@+id/addingBooksFragment"
         android:name="com.example.bookabook.ui.addingBook.AddingBooksFragment"
-        android:label="AddingBooksFragment" >
+        android:label="AddingBooksFragment"
+        tools:layout="@layout/adding_books_fragment">
         <action
             android:id="@+id/action_addingBooksFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_addingBooksFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
     </fragment>
     <fragment
-        tools:layout="@layout/log_in_fragment"
         android:id="@+id/logInFragment"
         android:name="com.example.bookabook.ui.userAuthentication.logIn.LogInFragment"
-        android:label="LogInFragment" >
+        android:label="LogInFragment"
+        tools:layout="@layout/log_in_fragment">
         <action
             android:id="@+id/action_logInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
-        <action
-            android:id="@+id/action_logInFragment_to_addingBooksFragment"
-            app:destination="@id/addingBooksFragment"
-            app:popUpTo="@id/addingBooksFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_logInFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:popUpTo="@id/profileFragment"
-            app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        tools:layout="@layout/sign_up_fragment"
         android:id="@+id/signUpFragment"
         android:name="com.example.bookabook.ui.userAuthentication.signUp.SignUpFragment"
-        android:label="SignUpFragment" >
+        android:label="SignUpFragment"
+        tools:layout="@layout/sign_up_fragment">
         <action
             android:id="@+id/action_signUpFragment_to_logInFragment"
             app:destination="@id/logInFragment"

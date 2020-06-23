@@ -1,12 +1,13 @@
 package com.example.bookabook.ui.userAuthentication.logIn
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.bookabook.R
@@ -19,7 +20,7 @@ class LogInFragment : Fragment() {
             LogInFragment()
     }
 
-    private lateinit var viewModel: LogInViewModel
+   private val viewModel: LogInViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,8 +29,8 @@ class LogInFragment : Fragment() {
         val binding = LogInFragmentBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
-        viewModel = ViewModelProviders.of(this).get(LogInViewModel::class.java)
         binding.logInViewModel = viewModel
+
 
         viewModel.navigateToRegister.observe(viewLifecycleOwner, Observer {
             if (false != it)
@@ -38,6 +39,11 @@ class LogInFragment : Fragment() {
                 viewModel.RegisterNavigationComplete()
             }
         })
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            viewModel.refuseAuthentication()
+            findNavController().popBackStack(R.id.homeFragment, false)
+        }
 
         viewModel.logInState.observe(viewLifecycleOwner, Observer {
             if (null != it)
@@ -70,6 +76,7 @@ class LogInFragment : Fragment() {
                     LogInStateState.LoggedIn->
                     {
                         toastMessage = "LoggedIn"
+                        findNavController().popBackStack()
                     }
                     else -> {
                         toastMessage = "Unexpected Error, Try Again"

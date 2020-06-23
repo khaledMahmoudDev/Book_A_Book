@@ -39,8 +39,8 @@ class HomeFragment : Fragment() {
         viewModel.navigateToLogIn.observe(viewLifecycleOwner, Observer {
             if (false != it)
             {
-                this.findNavController().navigate(R.id.action_homeFragment_to_logInFragment)
-                //this.findNavController().navigate(R.id.action_homeFragment_to_addingBooksFragment)
+                //this.findNavController().navigate(R.id.action_homeFragment_to_logInFragment)
+                this.findNavController().navigate(R.id.action_homeFragment_to_addingBooksFragment)
                 viewModel.navigateToLogInComplete()
             }
         })

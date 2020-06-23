@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.bookabook.R
 import com.example.bookabook.databinding.AddingBooksFragmentBinding
+import com.example.bookabook.ui.userAuthentication.logIn.LogInViewModel
 import com.example.bookabook.utils.Utils.PICK_IMAGE_REQUEST
 import com.google.android.material.chip.Chip
 
@@ -23,6 +25,7 @@ class AddingBooksFragment : Fragment() {
     }
 
     private lateinit var viewModel: AddingBooksViewModel
+    private val logInViewModel: LogInViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +35,15 @@ class AddingBooksFragment : Fragment() {
         val binding = AddingBooksFragmentBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
+        logInViewModel.authenticationState.observe(
+            viewLifecycleOwner,
+            Observer { authenticationState ->
+                when (authenticationState) {
+                    LogInViewModel.AuthenticationState.AUTHENTICATED -> showWelcomeMessage()
+                    LogInViewModel.AuthenticationState.UNAUTHENTICATED -> this.findNavController()
+                        .navigate(R.id.logInFragment)
+                }
+            })
 
         viewModel = ViewModelProviders.of(this).get(AddingBooksViewModel::class.java)
         binding.addBookViewModel = viewModel
@@ -102,6 +114,10 @@ class AddingBooksFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    private fun showWelcomeMessage() {
+        Toast.makeText(context, "welcome", Toast.LENGTH_LONG).show()
     }
 
     private fun selectImage() {
