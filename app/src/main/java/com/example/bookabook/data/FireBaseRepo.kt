@@ -100,6 +100,7 @@ object FireBaseRepo {
 
                 }.addOnFailureListener {
                     logInCallBack.onLogInStateChange(LogInState.EmailOrPasswordError)
+                    Log.d("logInerror", "sd$it")
 
                 }
             }.addOnFailureListener {
@@ -265,5 +266,5 @@ enum class RegisterState {
     SendVerificationSuccessfully,
     FailedToSaveUser,
     UserSavedSuccessfully
-
 }
+

@@ -31,51 +31,46 @@ class SignUpFragment : Fragment() {
         binding.signUpViewModel = viewModel
 
         viewModel.registerState.observe(viewLifecycleOwner, Observer {
-            var toastMessage : String = ""
-            when(it)
-            {
-                SignUpStateState.UserNameNotValid ->
-                {
-                    toastMessage = "Please Enter Valid User Name"
-                    binding.editTextTextUserName.requestFocus()
+            if (null != it) {
+                var toastMessage: String = ""
+                when (it) {
+                    SignUpStateState.UserNameNotValid -> {
+                        toastMessage = "Please Enter Valid User Name"
+                        binding.editTextTextUserName.requestFocus()
+
+                    }
+                    SignUpStateState.EmailNotValid -> {
+                        toastMessage = "Please Enter Valid Email"
+                        binding.editTextTextUseEmail.requestFocus()
+
+                    }
+                    SignUpStateState.PhoneNumberNotValid -> {
+                        toastMessage = "Please Enter Valid Phone Number"
+                        binding.editTextTextUsePhoneNumber.requestFocus()
+                    }
+                    SignUpStateState.PasswordNotValid -> {
+                        toastMessage = "Please Enter Valid Password"
+                        binding.editTextTextUsePassword.requestFocus()
+                    }
+                    SignUpStateState.PasswordOrEmailError -> {
+                        toastMessage = "Password Or Email Is not Valid"
+                    }
+                    SignUpStateState.FailedToRegister -> {
+                        toastMessage = "Failed To Register, try again"
+                    }
+                    SignUpStateState.Registered -> {
+                        toastMessage = "Please check your mail inbox for verification code"
+                        this.findNavController()
+                            .navigate(R.id.action_signUpFragment_to_logInFragment)
+                    }
+                    else -> {
+                        toastMessage = "Unexpected Error, Try Again"
+                    }
 
                 }
-                SignUpStateState.EmailNotValid ->
-                {
-                    toastMessage = "Please Enter Valid Email"
-                    binding.editTextTextUseEmail.requestFocus()
-
-                }
-                SignUpStateState.PhoneNumberNotValid ->
-                {
-                    toastMessage = "Please Enter Valid Phone Number"
-                    binding.editTextTextUsePhoneNumber.requestFocus()
-                }
-                SignUpStateState.PasswordNotValid ->
-                {
-                    toastMessage = "Please Enter Valid Password"
-                    binding.editTextTextUsePassword.requestFocus()
-                }
-                SignUpStateState.PasswordOrEmailError ->
-                {
-                    toastMessage = "Password Or Email Is not Valid"
-                }
-                SignUpStateState.FailedToRegister ->
-                {
-                    toastMessage = "Failed To Register"
-                }
-                SignUpStateState.Registered ->
-                {
-                    toastMessage = "Please check your email for verification code"
-                    this.findNavController().navigate(R.id.action_signUpFragment_to_logInFragment)
-                }
-                else ->
-                {
-                    toastMessage = "Unexpected Error, Try Again"
-                }
+                Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show()
 
             }
-            Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show()
         })
         return binding.root
     }

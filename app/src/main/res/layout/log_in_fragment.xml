@@ -96,6 +96,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/editTextTextEmail" />
 
                 <TextView
+                    android:onClick="@{()-> logInViewModel.forgetPasswordShowDialog(context)}"
                     android:id="@+id/ForgetPasswordTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -106,6 +107,8 @@
 
 
                 <Button
+                    app:enableIfTrue="@{logInViewModel.logInEnable}"
+                    android:onClick="@{()->logInViewModel.logIn()}"
                     android:id="@+id/button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
