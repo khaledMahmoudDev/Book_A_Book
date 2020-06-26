@@ -5,11 +5,9 @@ data class BooksModel(
     var bookTitle: String = "",
     var bookWriter: String = "",
     var bookDescription:String = "",
-   // var bookCategory: String = "",
-   // var bookAvailability : Boolean = true,
-    //var bookIsNew: Boolean = true,
-   // var bookAddedDate : String = "",
-   // var bookAddedTime:String = "",
-    var bookThumbnail : String = ""
-    //var bookOwnerId : String = ""
+    var bookCategory: ArrayList<String> =ArrayList(),
+    var bookAvailability: Boolean = true,
+    var bookAddedDate: MutableMap<String, String> = mutableMapOf(),
+    var bookThumbnail: String = "",
+    var bookOwnerId: String = ""
 )

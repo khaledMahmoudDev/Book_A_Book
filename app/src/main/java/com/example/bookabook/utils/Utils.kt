@@ -1,15 +1,16 @@
 package com.example.bookabook.utils
 
-import android.app.Dialog
-import android.content.Context
-import android.view.Window
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import com.example.bookabook.R
+import android.content.Intent
 
 object Utils {
     const val PICK_IMAGE_REQUEST = 111
+
+    fun pickImageIntent(): Intent {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        return intent
+    }
 
 
 }

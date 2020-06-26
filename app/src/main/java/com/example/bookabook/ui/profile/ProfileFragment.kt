@@ -8,16 +8,18 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.bookabook.R
-
+import com.example.bookabook.adapter.ProfileFragmentPagerAdapter
 import com.example.bookabook.databinding.ProfileFragmentBinding
 import com.example.bookabook.ui.userAuthentication.logIn.LogInViewModel
+import com.google.android.material.tabs.TabLayoutMediator
 
 
 class ProfileFragment : Fragment() {
+    private lateinit var profileFragmentPagerAdapter: ProfileFragmentPagerAdapter
+
 
     companion object {
         fun newInstance() = ProfileFragment()
@@ -42,6 +44,23 @@ class ProfileFragment : Fragment() {
                         .navigate(R.id.logInFragment)
                 }
             })
+        profileFragmentPagerAdapter = ProfileFragmentPagerAdapter(this)
+        binding.profileViewPager.adapter = profileFragmentPagerAdapter
+
+        val viewPager = binding.profileViewPager
+        val tabLayout = binding.tabLayout
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> {
+                    "My Books"
+                }
+                else -> {
+                    "Fav Books"
+                }
+            }
+
+        }.attach()
+
         return binding.root
     }
 
@@ -54,5 +73,6 @@ class ProfileFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
         // TODO: Use the ViewModel
     }
+
 
 }

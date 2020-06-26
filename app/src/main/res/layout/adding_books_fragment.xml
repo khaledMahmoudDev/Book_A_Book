@@ -197,6 +197,28 @@
                     app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
 
                 <TextView
+                    android:id="@+id/textViewBookAvailability"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small_normal"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:text="Book Availability"
+                    android:textColor="@color/yellow900"
+                    android:textSize="@dimen/text_medium"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextBookDescription" />
+                <Switch
+                    android:checked="@={addBookViewModel.availabilityState}"
+                    android:id="@+id/switch1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_medium"
+                    android:text="@{addBookViewModel.availabilityText}"
+                    app:layout_constraintStart_toEndOf="@+id/textViewBookAvailability"
+                    app:layout_constraintTop_toTopOf="@+id/textViewBookAvailability" />
+
+
+                <TextView
                     android:id="@+id/textViewCategories"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -208,7 +230,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextBookDescription" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewBookAvailability" />
 
                 <RelativeLayout
                     android:id="@+id/SelectCategoryLayout"
@@ -276,6 +298,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/AddBookAddCategory" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

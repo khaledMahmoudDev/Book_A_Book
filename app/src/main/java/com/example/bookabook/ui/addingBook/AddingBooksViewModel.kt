@@ -70,6 +70,18 @@ class AddingBooksViewModel : ViewModel() {
         Validation.validationResult(it)
     }
 
+    var availabilityState = MutableLiveData<Boolean>(false)
+    val availabilityText :LiveData<String> = Transformations.map(availabilityState)
+    {
+        if (it == true)
+        {
+            "Available"
+        }else
+        {
+          "Not Available"
+        }
+
+    }
 
     private var _addBookCategories = MutableLiveData<ArrayList<String>>()
     val addBookCategories: LiveData<ArrayList<String>>
@@ -186,7 +198,8 @@ class AddingBooksViewModel : ViewModel() {
                     _addingimageString,
                     addBookTitle,
                     addBookWriter,
-                    addBookDescription
+                    addBookDescription,
+                    availabilityState.value!!
                 )
 
             }

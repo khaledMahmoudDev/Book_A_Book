@@ -2,13 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="bookElement"
-            type="com.example.bookabook.model.BooksModel" />
+            type="com.example.bookabook.model.BooksModelRetreving" />
     </data>
 
-    <androidx.cardview.widget.CardView  android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_Super_tiny"
         android:layout_marginTop="@dimen/margin_tiny"
@@ -23,11 +26,11 @@
             android:layout_height="match_parent">
 
             <ImageView
-                app:imageString="@{bookElement.bookThumbnail}"
                 android:id="@+id/bookrowHomeImageElement"
                 android:layout_width="@dimen/BookElementWidth"
                 android:layout_height="0dp"
                 android:scaleType="matrix"
+                app:imageString="@{bookElement.bookThumbnail}"
                 app:layout_constraintDimensionRatio="@string/BookElementRatio"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -39,15 +42,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_tiny"
+                android:gravity="center"
                 android:text="@{bookElement.bookTitle}"
-                tools:text="book title"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/bookrowHomeImageElement"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/bookrowHomeImageElement"
-                app:layout_constraintTop_toBottomOf="@+id/bookrowHomeImageElement" />
+                app:layout_constraintTop_toBottomOf="@+id/bookrowHomeImageElement"
+                tools:text="book title" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
@@ -56,6 +60,7 @@
                 android:layout_marginTop="@dimen/margin_Super_tiny"
                 android:backgroundTint="@color/NewGreen"
                 app:cardCornerRadius="@dimen/CardRadius4"
+                app:hideIfFalse="@{bookElement.new}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -74,6 +79,7 @@
                 android:layout_height="0dp"
                 android:background="@color/CardNotAvailableColor"
                 android:visibility="gone"
+                app:hideIfTrue="@{bookElement.bookAvailability}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

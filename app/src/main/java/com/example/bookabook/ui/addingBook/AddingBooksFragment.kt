@@ -16,6 +16,7 @@ import com.example.bookabook.R
 import com.example.bookabook.databinding.AddingBooksFragmentBinding
 import com.example.bookabook.ui.userAuthentication.logIn.LogInViewModel
 import com.example.bookabook.utils.Utils.PICK_IMAGE_REQUEST
+import com.example.bookabook.utils.Utils.pickImageIntent
 import com.google.android.material.chip.Chip
 
 class AddingBooksFragment : Fragment() {
@@ -122,12 +123,11 @@ class AddingBooksFragment : Fragment() {
 
     private fun selectImage() {
 
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
+        val intent = pickImageIntent()
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
 
     }
+
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

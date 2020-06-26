@@ -2,18 +2,15 @@ package com.example.bookabook.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.bookabook.R
+
 import com.example.bookabook.databinding.BookHomeRowElementBinding
-import com.example.bookabook.model.BooksModel
+import com.example.bookabook.model.BooksModelRetreving
 
 class HomeBookListAdapter :
-    ListAdapter<BooksModel, HomeBookListAdapter.HomeBookListViewHolder>(HomeListDiffUtil()) {
+    ListAdapter<BooksModelRetreving, HomeBookListAdapter.HomeBookListViewHolder>(HomeListDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeBookListViewHolder {
         return HomeBookListViewHolder.from(parent)
@@ -26,7 +23,7 @@ class HomeBookListAdapter :
 
     class HomeBookListViewHolder private constructor(val binding: BookHomeRowElementBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(book: BooksModel) {
+        fun bind(book: BooksModelRetreving) {
             binding.bookElement = book
             binding.executePendingBindings()
         }
@@ -42,12 +39,12 @@ class HomeBookListAdapter :
     }
 }
 
-class HomeListDiffUtil : DiffUtil.ItemCallback<BooksModel>() {
-    override fun areItemsTheSame(oldItem: BooksModel, newItem: BooksModel): Boolean {
+class HomeListDiffUtil : DiffUtil.ItemCallback<BooksModelRetreving>() {
+    override fun areItemsTheSame(oldItem: BooksModelRetreving, newItem: BooksModelRetreving): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: BooksModel, newItem: BooksModel): Boolean {
+    override fun areContentsTheSame(oldItem: BooksModelRetreving, newItem: BooksModelRetreving): Boolean {
         return oldItem == newItem
     }
 

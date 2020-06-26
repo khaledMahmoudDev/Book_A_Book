@@ -4,6 +4,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.bookabook.model.BooksModel
+import com.example.bookabook.model.BooksModelRetreving
 import com.example.bookabook.model.User
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
@@ -12,6 +13,8 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import java.text.DateFormat
+import java.text.DateFormat.getDateTimeInstance
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -139,7 +142,8 @@ object FireBaseRepo {
         _addingimageString: MutableLiveData<Uri>,
         addBookTitle: MutableLiveData<String>,
         addBookWriter: MutableLiveData<String>,
-        addBookDescription: MutableLiveData<String>
+        addBookDescription: MutableLiveData<String>,
+        availability : Boolean
     ) {
 
         val ref = storageRef.child("uploads/" + UUID.randomUUID().toString())
@@ -159,7 +163,10 @@ object FireBaseRepo {
                         bookTitle = addBookTitle.value!!,
                         bookWriter = addBookWriter.value!!,
                         bookDescription = addBookDescription.value!!,
-                        bookThumbnail = downloadUri.toString()
+                        bookThumbnail = downloadUri.toString(),
+                        bookAddedDate = ServerValue.TIMESTAMP,
+                        bookAvailability = availability,
+                        bookOwnerId = mAuth.currentUser!!.uid
                     )
                     databaseBookRef.child(id).setValue(book).addOnSuccessListener {
                         Log.d("bookFireBase", "added")
@@ -187,10 +194,20 @@ object FireBaseRepo {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                var bookList: ArrayList<BooksModel> = ArrayList()
+                var bookList: ArrayList<BooksModelRetreving> = ArrayList()
                 for (n in p0.children) {
-                    var book = n.getValue(BooksModel::class.java)
+                    var book = n.getValue(BooksModelRetreving::class.java)
+                    val x = getTimeDate(book!!.bookAddedDate)
+                    val serverTime = Date(book.bookAddedDate).time
+                    val days = getNumOfDays(serverTime)
+                    if (days >= 1 )
+                    {
+                        book.isNew = false
+                    }
+
+                    Log.d("timeadded ", " time $days avail ${book.isNew}")
                     book?.let { bookList.add(it) }
+
                 }
                 downloadBooksCallBack.onDataSuccess(bookList)
             }
@@ -198,6 +215,21 @@ object FireBaseRepo {
         })
     }
 
+    private fun getNumOfDays(serverTime: Long): Long {
+        val currenet = Date().time
+        val diffTimeStamp  = currenet - serverTime
+        return diffTimeStamp/(1000*60*60*20)
+    }
+
+    fun getTimeDate(timestamp: Long): String? {
+        return try {
+            val dateFormat: DateFormat = getDateTimeInstance()
+            val netDate = Date(timestamp)
+            dateFormat.format(netDate)
+        } catch (e: Exception) {
+            "date"
+        }
+    }
 
     fun getCategoriesForChangingData(categoriesData: CategoriesData) {
 
@@ -227,9 +259,9 @@ open class CategoriesData(
 }
 
 open class DownloadBooksCallBack(
-    val onDataChanged: (dataChanged: ArrayList<BooksModel>) -> Unit
+    val onDataChanged: (dataChanged: ArrayList<BooksModelRetreving>) -> Unit
 ) {
-    fun onDataSuccess(data: ArrayList<BooksModel>) = onDataChanged(data)
+    fun onDataSuccess(data: ArrayList<BooksModelRetreving>) = onDataChanged(data)
 }
 
 open class UploadBookCallBack(val bookUploadState: (stateFireBase: BookFireBaseUploadState) -> Unit) {
