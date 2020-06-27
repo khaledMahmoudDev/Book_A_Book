@@ -48,6 +48,7 @@
     <dimen name="editTextHeight">35dp</dimen>
     <dimen name="ButtonHeight">40dp</dimen>
     <dimen name="signUpLogoHeight">150dp</dimen>
+    <dimen name="element_linear_geight">120dp</dimen>
 
 
 </resources>

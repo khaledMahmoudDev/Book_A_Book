@@ -8,6 +8,7 @@ data class BooksModelRetreving(
     var bookCategory: ArrayList<String> = ArrayList(),
     var bookAvailability: Boolean = true,
     var bookAddedDate: Long = 0L,
+    var bookAddedDateString: String = "",
     var bookThumbnail: String = "",
     var bookOwnerId: String = "",
     var isNew: Boolean = true

@@ -1,12 +1,13 @@
 package com.example.bookabook.ui.myBooks
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.bookabook.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import com.example.bookabook.adapter.ProfileBookListAdapter
+import com.example.bookabook.databinding.MyBooksFragmentBinding
 
 class MyBooksFragment : Fragment() {
 
@@ -14,19 +15,23 @@ class MyBooksFragment : Fragment() {
         fun newInstance() = MyBooksFragment()
     }
 
-    private lateinit var viewModel: MyBooksViewModel
+    private val viewModel: MyBooksViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.my_books_fragment, container, false)
+
+        val binding = MyBooksFragmentBinding.inflate(layoutInflater)
+        binding.lifecycleOwner = this
+
+        binding.myBooksViewModel = viewModel
+        binding.myBooksList.adapter = ProfileBookListAdapter()
+
+
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MyBooksViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
+
 
 }

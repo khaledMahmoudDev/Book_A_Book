@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.bookabook.R
 import com.example.bookabook.adapter.HomeBookListAdapter
+import com.example.bookabook.adapter.ProfileBookListAdapter
 import com.example.bookabook.model.BooksModelRetreving
 
 @BindingAdapter("imageUrl")
@@ -26,6 +27,7 @@ fun bindImage(imgView: ImageView, imgUrl: Uri?) {
     }
 
 }
+
 @BindingAdapter("imageString")
 fun bindImageString(imgView: ImageView, imgString: String?) {
     imgString?.let {
@@ -57,10 +59,16 @@ fun bindHideIfTrue(view: View, isFalse: Boolean) {
 fun enableIfTrue(view: View, isTrue: Boolean) {
     view.isEnabled = isTrue
 }
+
 @BindingAdapter("BookListData")
-fun bindBookList(recyclerView: RecyclerView, data : List<BooksModelRetreving>?){
+fun bindBookList(recyclerView: RecyclerView, data: List<BooksModelRetreving>?) {
     val adapter = recyclerView.adapter as HomeBookListAdapter
     adapter.submitList(data)
+}
 
+@BindingAdapter("BookListDataProfile")
+fun bindBookListProfile(recyclerView: RecyclerView, data: List<BooksModelRetreving>?) {
+    val adapter = recyclerView.adapter as ProfileBookListAdapter
+    adapter.submitList(data)
 }
 

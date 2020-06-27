@@ -17,6 +17,7 @@ import java.text.DateFormat
 import java.text.DateFormat.getDateTimeInstance
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.coroutines.coroutineContext
 
 var database: FirebaseDatabase = FirebaseDatabase.getInstance()
 var storage: FirebaseStorage = FirebaseStorage.getInstance()
@@ -129,10 +130,11 @@ object FireBaseRepo {
         }
     }
 
-    fun signOut()
-    {
+    fun signOut() {
         mAuth.signOut()
+        Log.d("stateLogOut", "logInFirebase")
     }
+
     fun upLoadNewCategory(cat: String) {
         databaseCategoryRef.push().setValue(cat)
     }
@@ -143,7 +145,7 @@ object FireBaseRepo {
         addBookTitle: MutableLiveData<String>,
         addBookWriter: MutableLiveData<String>,
         addBookDescription: MutableLiveData<String>,
-        availability : Boolean
+        availability: Boolean
     ) {
 
         val ref = storageRef.child("uploads/" + UUID.randomUUID().toString())
@@ -187,7 +189,8 @@ object FireBaseRepo {
 
     }
 
-    fun getBooks(downloadBooksCallBack: DownloadBooksCallBack) {
+
+    fun getBooks(ownerCondition: OwnerCondition, downloadBooksCallBack: DownloadBooksCallBack) {
         databaseBookRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 TODO("Not yet implemented")
@@ -198,15 +201,27 @@ object FireBaseRepo {
                 for (n in p0.children) {
                     var book = n.getValue(BooksModelRetreving::class.java)
                     val x = getTimeDate(book!!.bookAddedDate)
+                    book.bookAddedDateString = x!!
                     val serverTime = Date(book.bookAddedDate).time
                     val days = getNumOfDays(serverTime)
-                    if (days >= 1 )
-                    {
+                    if (days >= 1) {
                         book.isNew = false
                     }
 
                     Log.d("timeadded ", " time $days avail ${book.isNew}")
-                    book?.let { bookList.add(it) }
+                    when (ownerCondition) {
+                        OwnerCondition.AllUsers -> {
+                            book.let { bookList.add(it) }
+                        }
+                        OwnerCondition.CurrentUser -> {
+                            book.let {
+                                if (it.bookOwnerId == mAuth.currentUser!!.uid) {
+                                    bookList.add(it)
+                                }
+                            }
+                        }
+                    }
+
 
                 }
                 downloadBooksCallBack.onDataSuccess(bookList)
@@ -217,8 +232,8 @@ object FireBaseRepo {
 
     private fun getNumOfDays(serverTime: Long): Long {
         val currenet = Date().time
-        val diffTimeStamp  = currenet - serverTime
-        return diffTimeStamp/(1000*60*60*20)
+        val diffTimeStamp = currenet - serverTime
+        return diffTimeStamp / (1000 * 60 * 60 * 20)
     }
 
     fun getTimeDate(timestamp: Long): String? {
@@ -298,5 +313,10 @@ enum class RegisterState {
     SendVerificationSuccessfully,
     FailedToSaveUser,
     UserSavedSuccessfully
+}
+
+enum class OwnerCondition {
+    AllUsers,
+    CurrentUser
 }
 

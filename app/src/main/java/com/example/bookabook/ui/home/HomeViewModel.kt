@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.bookabook.data.DownloadBooksCallBack
 import com.example.bookabook.data.FireBaseRepo
+import com.example.bookabook.data.OwnerCondition
 import com.example.bookabook.model.BooksModelRetreving
 
 class HomeViewModel : ViewModel() {
@@ -22,7 +23,7 @@ class HomeViewModel : ViewModel() {
 
     private fun getBooksList(){
         progressBarVisability.value = true
-        FireBaseRepo.getBooks(DownloadBooksCallBack {
+        FireBaseRepo.getBooks(OwnerCondition.AllUsers,DownloadBooksCallBack {
             _bookList.value = it
             progressBarVisability.value = false
         })

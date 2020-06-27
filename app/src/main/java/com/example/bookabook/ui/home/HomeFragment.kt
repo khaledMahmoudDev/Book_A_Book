@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.bookabook.R
@@ -20,7 +21,7 @@ class HomeFragment : Fragment() {
         fun newInstance() = HomeFragment()
     }
 
-    private lateinit var viewModel: HomeViewModel
+    private  val viewModel: HomeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +32,6 @@ class HomeFragment : Fragment() {
         val binding = HomeFragmentBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
-
-        viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         binding.homeViewModel  = viewModel
         binding.homeBookRecycler.adapter = HomeBookListAdapter()
 

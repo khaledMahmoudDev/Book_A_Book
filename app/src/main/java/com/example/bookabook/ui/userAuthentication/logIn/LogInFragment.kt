@@ -1,6 +1,7 @@
 package com.example.bookabook.ui.userAuthentication.logIn
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,7 @@ class LogInFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("stateLogOut", "ONCreatedLogIn")
         val binding = LogInFragmentBinding.inflate(inflater)
         binding.lifecycleOwner = this
 

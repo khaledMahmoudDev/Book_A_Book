@@ -2,6 +2,7 @@ package com.example.bookabook.ui.userAuthentication.logIn
 
 import android.app.Dialog
 import android.content.Context
+import android.util.Log
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
@@ -21,11 +22,13 @@ class LogInViewModel : ViewModel() {
 
     enum class AuthenticationState {
         UNAUTHENTICATED,        // Initial state, the user needs to authenticate
-        AUTHENTICATED  ,        // The user has authenticated successfully
+        AUTHENTICATED,        // The user has authenticated successfully
         INVALID_AUTHENTICATION  // Authentication failed
     }
 
-    private fun isLoggedIn() = FireBaseRepo.isLoggedIn()
+    private fun isLoggedIn(): Boolean {
+        return FireBaseRepo.isLoggedIn()
+    }
 
     val authenticationState = MutableLiveData<AuthenticationState>()
 
@@ -35,15 +38,25 @@ class LogInViewModel : ViewModel() {
 
     init {
 
-        if (isLoggedIn())
-        {
+        checkIfLogIn()
+    }
+
+    private fun checkIfLogIn() {
+        Log.d("stateLogOut", "call checkIfLogIn")
+        if (isLoggedIn()) {
             authenticationState.value = AuthenticationState.AUTHENTICATED
-        }else
-        {
+        } else {
+            Log.d("stateLogOut", "Check if logIn and change value")
             authenticationState.value = AuthenticationState.UNAUTHENTICATED
         }
     }
 
+    fun signOut() {
+        Log.d("stateLogOut", "logInViewModel")
+        FireBaseRepo.signOut()
+        checkIfLogIn()
+        _logInState.value = LogInStateState.FAiledToLogIn
+    }
 
     var userEmail = MutableLiveData<String>()
     private val isEmailValid: LiveData<ValidationMSG> = Transformations.map(userEmail) {
@@ -86,15 +99,18 @@ class LogInViewModel : ViewModel() {
                         when (it) {
                             LogInState.EmailIsNotVerified -> {
                                 _logInState.value = LogInStateState.EmailIsNotVerified
-                                authenticationState.value = AuthenticationState.INVALID_AUTHENTICATION
+                                authenticationState.value =
+                                    AuthenticationState.INVALID_AUTHENTICATION
                             }
                             LogInState.FailedToLogIn -> {
                                 _logInState.value = LogInStateState.FAiledToLogIn
-                                authenticationState.value = AuthenticationState.INVALID_AUTHENTICATION
+                                authenticationState.value =
+                                    AuthenticationState.INVALID_AUTHENTICATION
                             }
                             LogInState.EmailOrPasswordError -> {
                                 _logInState.value = LogInStateState.EmailOrPasswordIsNotCorrect
-                                authenticationState.value = AuthenticationState.INVALID_AUTHENTICATION
+                                authenticationState.value =
+                                    AuthenticationState.INVALID_AUTHENTICATION
                             }
                             LogInState.LoggedInSuccessfully -> {
                                 _logInState.value = LogInStateState.LoggedIn
