@@ -14,10 +14,10 @@ class MyBooksViewModel : ViewModel() {
         get() = _bookList
 
     init {
-        getBooksList()
+
     }
 
-    private fun getBooksList(){
+     fun getBooksList(){
         FireBaseRepo.getBooks(OwnerCondition.CurrentUser,DownloadBooksCallBack {
             _bookList.value = it
         })

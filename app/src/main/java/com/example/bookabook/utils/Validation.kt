@@ -29,7 +29,7 @@ object Validation {
             ValidationMSG.Empty
         } else if (!Patterns.PHONE.matcher(input).matches()) {
             ValidationMSG.NotPhone
-        } else if (input.length < 10) {
+        } else if (input.length < 11) {
             ValidationMSG.TooSmall
         } else ValidationMSG.Good
     }
@@ -40,7 +40,7 @@ object Validation {
             input == "" -> {
                 ValidationMSG.Empty
             }
-            input.length < 5 -> {
+            input.length < 6 -> {
                 ValidationMSG.TooSmall
             }
             else -> ValidationMSG.Good

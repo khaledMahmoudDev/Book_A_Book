@@ -17,7 +17,6 @@ import java.text.DateFormat
 import java.text.DateFormat.getDateTimeInstance
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.coroutines.coroutineContext
 
 var database: FirebaseDatabase = FirebaseDatabase.getInstance()
 var storage: FirebaseStorage = FirebaseStorage.getInstance()
@@ -30,6 +29,10 @@ object FireBaseRepo {
     var databaseCategoryRef: DatabaseReference = database.getReference("Categories")
     var databaseBookRef: DatabaseReference = database.getReference("Book")
     var databaseUserRef: DatabaseReference = database.getReference("Users")
+    var databaseBooksFavouriteRef: DatabaseReference = database.getReference("FavouriteBooks")
+
+
+    fun areTheSameUSer(email: String) = email == mAuth.currentUser!!.email
 
 
     fun register(
@@ -41,8 +44,9 @@ object FireBaseRepo {
     ) {
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
-                task.addOnSuccessListener {
-                    createUserOnDB(email, name, phoneNumber, RegisterCallBack {
+                task.addOnSuccessListener { it ->
+                    val id = it.user!!.uid
+                    createUserOnDB(email, name, phoneNumber, id, RegisterCallBack {
                         when (it) {
                             RegisterState.UserSavedSuccessfully -> {
                                 registerCallBack.onLogInStateChange(RegisterState.RegisteredSuccessfully)
@@ -67,9 +71,10 @@ object FireBaseRepo {
         email: String,
         name: String,
         phoneNumber: String,
+        id: String,
         registerCallBack: RegisterCallBack
     ) {
-        val id = databaseUserRef.push().key.toString()
+        //  val id = databaseUserRef.push().key.toString()
         var user = User(userName = name, email = email, phoneNumber = phoneNumber, id = id)
         databaseUserRef.child(id).setValue(user).addOnSuccessListener {
             sendVerificationEmail(
@@ -87,6 +92,7 @@ object FireBaseRepo {
                 })
         }
     }
+
 
     private fun sendVerificationEmail(registerCallBack: RegisterCallBack) {
         val user = mAuth.currentUser
@@ -135,6 +141,94 @@ object FireBaseRepo {
         Log.d("stateLogOut", "logInFirebase")
     }
 
+    fun uploadNewFavBook(bookId: String) {
+
+        databaseBooksFavouriteRef.child(mAuth.currentUser!!.uid).child(bookId).setValue(bookId)
+    }
+
+    fun removeFavBooks(bookId: String) {
+        Log.d("fav", "fire remove")
+        databaseBooksFavouriteRef.child(mAuth.currentUser!!.uid).child(bookId).removeValue()
+    }
+
+
+
+    fun getAllFavBooks(favouriteBooksCallBack: FavouriteBooksCallBack) {
+        databaseBooksFavouriteRef.child(mAuth.currentUser!!.uid)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+
+                    var favBooksList: ArrayList<String> = ArrayList()
+                    for (n in p0.children) {
+                        var favBook: String? = n.getValue(String::class.java)
+                        if (favBook != null) {
+                            favBooksList.add(favBook)
+                        }
+                    }
+                    favouriteBooksCallBack.onGettingFavouriteBook(favBooksList)
+                }
+
+            })
+    }
+
+//
+//    fun getAddedBook(bookCallBack : FavBookCallback)
+//    {
+//        databaseBookRef.addChildEventListener(object: ChildEventListener{
+//            override fun onCancelled(p0: DatabaseError) {
+//
+//            }
+//
+//            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+//
+//            }
+//
+//            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+//
+//            }
+//
+//            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+//                val book = p0.getValue(BooksModelRetreving::class.java)
+//                Log.d("onChildAdded", "$book")
+//                if (book != null) {
+//                    bookCallBack.onBookRetrievedSuccessFully(book)
+//                }
+//            }
+//
+//            override fun onChildRemoved(p0: DataSnapshot) {
+//
+//            }
+//
+//        })
+//
+//    }
+    fun getBook(bookId: String, bookDataCallBack: FavBookCallback) {
+        Log.d("fav", "cancelled")
+        databaseBookRef.child(bookId).addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d("fav retrived", "cancelled")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                val booksModelRetreving = p0.getValue(BooksModelRetreving::class.java)
+                if (booksModelRetreving != null) {
+                    Log.d("fav retrived", booksModelRetreving.toString())
+//                    val x = getTimeDate(booksModelRetreving.bookAddedDate)
+//                    booksModelRetreving.bookAddedDateString = x!!
+                    bookDataCallBack.onBookRetrievedSuccessFully(booksModelRetreving)
+                } else {
+                    Log.d("fav retrived", "false ot null")
+                }
+
+            }
+
+        })
+    }
+
+
     fun upLoadNewCategory(cat: String) {
         databaseCategoryRef.push().setValue(cat)
     }
@@ -168,7 +262,7 @@ object FireBaseRepo {
                         bookThumbnail = downloadUri.toString(),
                         bookAddedDate = ServerValue.TIMESTAMP,
                         bookAvailability = availability,
-                        bookOwnerId = mAuth.currentUser!!.uid
+                        bookOwnerId = mAuth.currentUser!!.email!!
                     )
                     databaseBookRef.child(id).setValue(book).addOnSuccessListener {
                         Log.d("bookFireBase", "added")
@@ -189,6 +283,29 @@ object FireBaseRepo {
 
     }
 
+
+    fun getUser(usercallBack: UserCallBack) {
+        lateinit var user: User
+        databaseUserRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for (n in p0.children) {
+                    val us = n.getValue(User::class.java)
+                    if (mAuth.currentUser!!.uid == us!!.id) {
+                        user = User()
+                        usercallBack.onGettingUser(user)
+                        Log.d("fav", "user is $user")
+                    }
+                }
+            }
+
+        })
+
+    }
 
     fun getBooks(ownerCondition: OwnerCondition, downloadBooksCallBack: DownloadBooksCallBack) {
         databaseBookRef.addValueEventListener(object : ValueEventListener {
@@ -215,7 +332,7 @@ object FireBaseRepo {
                         }
                         OwnerCondition.CurrentUser -> {
                             book.let {
-                                if (it.bookOwnerId == mAuth.currentUser!!.uid) {
+                                if (it.bookOwnerId == mAuth.currentUser!!.email) {
                                     bookList.add(it)
                                 }
                             }
@@ -273,6 +390,7 @@ open class CategoriesData(
     fun onDataSuccess(data: ArrayList<String>) = onDataChanged(data)
 }
 
+
 open class DownloadBooksCallBack(
     val onDataChanged: (dataChanged: ArrayList<BooksModelRetreving>) -> Unit
 ) {
@@ -286,6 +404,12 @@ open class UploadBookCallBack(val bookUploadState: (stateFireBase: BookFireBaseU
 
 open class LogInCallBack(val logInState: (state: LogInState) -> Unit) {
     fun onLogInStateChange(changeState: LogInState) = logInState(changeState)
+}
+
+
+class FavBookCallback(val dataChanged: (data: BooksModelRetreving) -> Unit) {
+    fun onBookRetrievedSuccessFully( dataChange :BooksModelRetreving) = dataChanged(dataChange)
+
 }
 
 enum class BookFireBaseUploadState {
@@ -303,6 +427,17 @@ enum class LogInState {
 
 open class RegisterCallBack(val registerState: (state: RegisterState) -> Unit) {
     fun onLogInStateChange(changeState: RegisterState) = registerState(changeState)
+}
+
+class UserCallBack(val userstate: (user: User) -> Unit) {
+    fun onGettingUser(userChange: User) = userstate(userChange)
+
+}
+
+class FavouriteBooksCallBack(val FavouriteBookState: (book: ArrayList<String>) -> Unit) {
+    fun onGettingFavouriteBook(FavouriteBookChange: ArrayList<String>) =
+        FavouriteBookState(FavouriteBookChange)
+
 }
 
 enum class RegisterState {

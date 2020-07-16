@@ -1,5 +1,10 @@
 package com.example.bookabook.model
 
+import android.os.Parcel
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class BooksModelRetreving(
     var id: String = "",
     var bookTitle: String = "",
@@ -12,4 +17,4 @@ data class BooksModelRetreving(
     var bookThumbnail: String = "",
     var bookOwnerId: String = "",
     var isNew: Boolean = true
-)
+) : Parcelable

@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/yellow100"
+        android:background="@color/backGroundOff"
         tools:context=".ui.favouriteBooks.FavouriteBooksFragment">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/margin_Super_tiny"
-            android:background="@color/yellow100"
+            android:background="@color/backGroundOff"
             android:text="Favourite"
             app:BookListDataProfile="@{myBooksViewModel.booklist}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

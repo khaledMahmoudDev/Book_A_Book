@@ -1,19 +1,17 @@
 package com.example.bookabook.ui.home
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.bookabook.R
+import com.example.bookabook.adapter.BookElementClickListener
 import com.example.bookabook.adapter.HomeBookListAdapter
 import com.example.bookabook.databinding.HomeFragmentBinding
-import kotlinx.android.synthetic.main.home_fragment.*
+
 
 class HomeFragment : Fragment() {
 
@@ -21,23 +19,29 @@ class HomeFragment : Fragment() {
         fun newInstance() = HomeFragment()
     }
 
-    private  val viewModel: HomeViewModel by activityViewModels()
+    private val viewModel: HomeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
         val binding = HomeFragmentBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
-        binding.homeViewModel  = viewModel
-        binding.homeBookRecycler.adapter = HomeBookListAdapter()
+        binding.homeViewModel = viewModel
+
+           setHasOptionsMenu(true)
+
+        binding.homeBookRecycler.adapter = HomeBookListAdapter(BookElementClickListener {
+            Toast.makeText(context, it.bookTitle, Toast.LENGTH_LONG).show()
+            val action = HomeFragmentDirections.actionHomeFragmentToElementDetailsFragment(it)
+            findNavController().navigate(action)
+
+
+        })
 
         viewModel.navigateToLogIn.observe(viewLifecycleOwner, Observer {
-            if (false != it)
-            {
+            if (false != it) {
                 //this.findNavController().navigate(R.id.action_homeFragment_to_logInFragment)
                 this.findNavController().navigate(R.id.action_homeFragment_to_addingBooksFragment)
                 viewModel.navigateToLogInComplete()
@@ -48,16 +52,23 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home_menu, menu)
 
+        super.onCreateOptionsMenu(menu, inflater)
 
-
-//        extended_fab.setOnClickListener {
-//
-//            Toast.makeText(context,"FAB clicked", Toast.LENGTH_LONG).show()
-//            this.findNavController().navigate(R.id.action_homeFragment_to_addingBooksFragment)
-//        }
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.homeSearch -> {
+                findNavController().navigate(R.id.searchFragment)
+            }
+
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
 
 }

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bookabook.databinding.ProfileBookElementBinding
 import com.example.bookabook.model.BooksModelRetreving
 
-class ProfileBookListAdapter :
+class ProfileBookListAdapter (val bookElementClickListener: BookElementClickListener):
     ListAdapter<BooksModelRetreving, ProfileBookListAdapter.ProfileBookListViewHolder>(
         ProfileBookDiffUtill()
     ) {
@@ -19,14 +19,18 @@ class ProfileBookListAdapter :
 
     override fun onBindViewHolder(holder: ProfileBookListViewHolder, position: Int) {
         val book = getItem(position)
-        holder.bind(book)
+        holder.bind(book,bookElementClickListener)
     }
 
     class ProfileBookListViewHolder private constructor(val binding: ProfileBookElementBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(book: BooksModelRetreving?) {
+        fun bind(
+            book: BooksModelRetreving?,
+            bookElementClickListener: BookElementClickListener
+        ) {
             binding.bookLinearElement = book
+            binding.clickLiatener = bookElementClickListener
             binding.executePendingBindings()
         }
 

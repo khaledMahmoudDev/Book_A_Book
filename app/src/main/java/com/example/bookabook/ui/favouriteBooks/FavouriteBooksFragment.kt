@@ -1,12 +1,19 @@
 package com.example.bookabook.ui.favouriteBooks
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.bookabook.R
+import com.example.bookabook.adapter.BookElementClickListener
+import com.example.bookabook.adapter.ProfileBookListAdapter
+import com.example.bookabook.databinding.FavouriteBooksFragmentBinding
+import com.example.bookabook.ui.userAuthentication.logIn.LogInViewModel
 
 class FavouriteBooksFragment : Fragment() {
 
@@ -14,19 +21,50 @@ class FavouriteBooksFragment : Fragment() {
         fun newInstance() = FavouriteBooksFragment()
     }
 
-    private lateinit var viewModel: FavouriteBooksViewModel
+    private val viewModel: FavouriteBooksViewModel by activityViewModels()
+
+    private val logInViewModel: LogInViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.favourite_books_fragment, container, false)
+        val binding = FavouriteBooksFragmentBinding.inflate(inflater)
+        binding.lifecycleOwner = this
+        logInViewModel.authenticationState.observe(
+            viewLifecycleOwner,
+            Observer { authenticationState ->
+                Log.d(
+                    "stateLogOut",
+                    "observer " + logInViewModel.authenticationState.value.toString()
+                )
+                when (authenticationState) {
+                    LogInViewModel.AuthenticationState.AUTHENTICATED -> {
+                        viewModel.getBooksList()
+                    }
+                    LogInViewModel.AuthenticationState.UNAUTHENTICATED -> {
+                        Log.d("stateLogOut", "observer entered unAuth")
+                        findNavController()
+                            .navigate(R.id.logInFragment)
+                    }
+                }
+            })
+
+
+        binding.myFavBooksViewModel = viewModel
+        binding.myBooksList.adapter = ProfileBookListAdapter(BookElementClickListener {
+
+            val action =
+                FavouriteBooksFragmentDirections.actionFavouriteBooksToElementDetailsFragment(it)
+            findNavController().navigate(action)
+        })
+        return binding.root
+
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(FavouriteBooksViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+
+    }
 }

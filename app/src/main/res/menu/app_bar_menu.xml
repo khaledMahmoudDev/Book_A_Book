@@ -10,12 +10,12 @@
     <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_baseline_person_24"
-        android:title="ProfileFragment" />
+        android:title="Profile" />
 
     <item
-        android:id="@+id/settingsFragment"
-        android:icon="@drawable/ic_baseline_settings_24"
-        android:title="Settings"
+        android:id="@+id/notificationFragment"
+        android:icon="@drawable/ic_baseline_notifications_24"
+        android:title="Notifications"
         app:showAsAction="always" />
 
 </menu>

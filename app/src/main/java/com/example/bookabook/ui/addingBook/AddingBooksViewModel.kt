@@ -12,10 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.bookabook.R
-import com.example.bookabook.data.BookFireBaseUploadState
-import com.example.bookabook.data.CategoriesData
-import com.example.bookabook.data.FireBaseRepo
-import com.example.bookabook.data.UploadBookCallBack
+import com.example.bookabook.data.*
 import com.example.bookabook.utils.Validation
 import com.example.bookabook.utils.ValidationMSG
 

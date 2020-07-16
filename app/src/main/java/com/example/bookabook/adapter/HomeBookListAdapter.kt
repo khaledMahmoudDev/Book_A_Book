@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bookabook.databinding.BookHomeRowElementBinding
 import com.example.bookabook.model.BooksModelRetreving
 
-class HomeBookListAdapter :
+class HomeBookListAdapter(val bookElementClickListener: BookElementClickListener) :
     ListAdapter<BooksModelRetreving, HomeBookListAdapter.HomeBookListViewHolder>(HomeListDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeBookListViewHolder {
@@ -18,13 +18,18 @@ class HomeBookListAdapter :
 
     override fun onBindViewHolder(holder: HomeBookListViewHolder, position: Int) {
         val book = getItem(position)
-        holder.bind(book)
+        holder.bind(book, bookElementClickListener)
+
     }
 
     class HomeBookListViewHolder private constructor(val binding: BookHomeRowElementBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(book: BooksModelRetreving) {
+        fun bind(
+            book: BooksModelRetreving,
+            bookElementClickListener: BookElementClickListener
+        ) {
             binding.bookElement = book
+            binding.clickLiatener = bookElementClickListener
             binding.executePendingBindings()
         }
 
@@ -39,12 +44,22 @@ class HomeBookListAdapter :
     }
 }
 
+class BookElementClickListener(val bookChangeClickListener: (book: BooksModelRetreving) -> Unit) {
+    fun onBookClick(book: BooksModelRetreving) = bookChangeClickListener(book)
+}
+
 class HomeListDiffUtil : DiffUtil.ItemCallback<BooksModelRetreving>() {
-    override fun areItemsTheSame(oldItem: BooksModelRetreving, newItem: BooksModelRetreving): Boolean {
+    override fun areItemsTheSame(
+        oldItem: BooksModelRetreving,
+        newItem: BooksModelRetreving
+    ): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: BooksModelRetreving, newItem: BooksModelRetreving): Boolean {
+    override fun areContentsTheSame(
+        oldItem: BooksModelRetreving,
+        newItem: BooksModelRetreving
+    ): Boolean {
         return oldItem == newItem
     }
 

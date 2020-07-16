@@ -11,113 +11,112 @@
 
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/yellow100"
         tools:context=".ui.userAuthentication.signUp.SignUpFragment">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:liftOnScroll="true">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/topAppBar"
-                style="@style/Widget.MaterialComponents.Toolbar.Primary"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:title="Log In" />
-        </com.google.android.material.appbar.AppBarLayout>
-
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:background="@drawable/opacity"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
+                <TextView
                     android:id="@+id/imageView"
+                    style="@style/TextMainHeader"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/signUpLogoHeight"
-                    android:layout_marginTop="@dimen/margin_large"
-                    android:src="@drawable/share_free_book"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_medium"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginEnd="@dimen/margin_medium"
+                    android:text="Log In To Your Account"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/editTextTextEmail"
+                    style="@style/MyAppEditText"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/editTextHeight"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_normal"
                     android:layout_marginTop="@dimen/margin_extra"
                     android:layout_marginEnd="@dimen/margin_normal"
-                    android:background="@drawable/edit_text_background"
-                    android:ems="10"
                     android:hint="Email Address"
-                    android:lines="1"
                     android:inputType="textEmailAddress"
-                    android:paddingStart="@dimen/editTextPadding"
-                    android:paddingEnd="@dimen/editTextPadding"
-                    android:text="@={logInViewModel.userEmail}"
+                    android:lines="1"
                     app:error="@{logInViewModel.userEmailError}"
-                    app:errorEnabled="true"
-                    app:hintEnabled="false"
+                    app:helperText="ex: Ahmed@test.com"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                    app:layout_constraintTop_toBottomOf="@+id/imageView">
 
-                <EditText
-                    android:text="@={logInViewModel.userPassword}"
-                    app:error="@{logInViewModel.userPasswordError}"
-                    app:errorEnabled="true"
-                    app:hintEnabled="false"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/aaa"
+                        android:textAppearance="@style/TextItemSubTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/editTextTextPassword"
+                    style="@style/MyAppEditText"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/editTextHeight"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_normal"
                     android:layout_marginTop="@dimen/margin_medium"
                     android:layout_marginEnd="@dimen/margin_normal"
-                    android:background="@drawable/edit_text_background"
-                    android:ems="10"
                     android:hint="Password"
                     android:inputType="textPassword"
                     android:lines="1"
-                    android:paddingStart="@dimen/editTextPadding"
-                    android:paddingEnd="@dimen/editTextPadding"
+                    app:error="@{logInViewModel.userPasswordError}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextTextEmail" />
+                    app:layout_constraintTop_toBottomOf="@+id/editTextTextEmail"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/aaaa"
+                        android:textAppearance="@style/TextItemSubTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
-                    android:onClick="@{()-> logInViewModel.forgetPasswordShowDialog(context)}"
                     android:id="@+id/ForgetPasswordTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
+                    android:onClick="@{()-> logInViewModel.forgetPasswordShowDialog(context)}"
                     android:text="Forgot Password?"
                     app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"
                     app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
 
                 <Button
-                    app:enableIfTrue="@{logInViewModel.logInEnable}"
-                    android:onClick="@{()->logInViewModel.logIn()}"
                     android:id="@+id/button"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_normal"
                     android:layout_marginTop="@dimen/margin_large"
                     android:layout_marginEnd="@dimen/margin_normal"
-                    android:backgroundTint="@color/yellowLight"
+                    android:backgroundTint="@color/backGroundOff"
+                    android:onClick="@{()->logInViewModel.logIn()}"
                     android:text="LogIn"
-                    android:textColor="@color/yellow900"
+                    android:textColor="@color/colorAccent"
+                    app:enableIfTrue="@{logInViewModel.logInEnable}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ForgetPasswordTextView" />
@@ -138,12 +137,17 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:hideIfFalse="@{logInViewModel.progressBarVisability}" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            app:hideIfFalse="@{logInViewModel.progressBarVisability}"
+            app:layout_constraintBottom_toBottomOf="@+id/nestedScrollView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

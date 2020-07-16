@@ -8,22 +8,37 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.bookabook.ui.home.HomeFragment"
-        android:label="home_fragment"
+        android:label="Home"
         tools:layout="@layout/home_fragment">
         <action
             android:id="@+id/action_homeFragment_to_addingBooksFragment"
             app:destination="@id/addingBooksFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_elementDetailsFragment"
+            app:destination="@id/elementDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/favouriteBooks"
         android:name="com.example.bookabook.ui.favouriteBooks.FavouriteBooksFragment"
         android:label="favourite_books_fragment"
-        tools:layout="@layout/favourite_books_fragment" />
+        tools:layout="@layout/favourite_books_fragment">
+        <action
+            android:id="@+id/action_favouriteBooks_to_elementDetailsFragment"
+            app:destination="@id/elementDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/myBooks"
         android:name="com.example.bookabook.ui.myBooks.MyBooksFragment"
         android:label="my_books_fragment"
-        tools:layout="@layout/my_books_fragment" />
+        tools:layout="@layout/my_books_fragment">
+        <action
+            android:id="@+id/action_myBooks_to_elementDetailsFragment"
+            app:destination="@id/elementDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.bookabook.ui.settings.SettingsFragment"
@@ -33,14 +48,7 @@
         android:id="@+id/profileFragment"
         android:name="com.example.bookabook.ui.profile.ProfileFragment"
         android:label="profile_fragment"
-        tools:layout="@layout/profile_fragment">
-        <action
-            android:id="@+id/action_profileFragment_to_myBooks"
-            app:destination="@id/myBooks" />
-        <action
-            android:id="@+id/action_profileFragment_to_favouriteBooks"
-            app:destination="@id/favouriteBooks" />
-    </fragment>
+        tools:layout="@layout/profile_fragment" />
     <fragment
         android:id="@+id/addingBooksFragment"
         android:name="com.example.bookabook.ui.addingBook.AddingBooksFragment"
@@ -71,5 +79,42 @@
             app:destination="@id/logInFragment"
             app:popUpTo="@id/logInFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/elementDetailsFragment"
+        android:name="com.example.bookabook.ui.elementDetails.ElementDetailsFragment"
+        android:label="ElementDetailsFragment"
+        tools:layout="@layout/element_details_fragment">
+        <argument
+            android:name="clickedBook"
+            app:argType="com.example.bookabook.model.BooksModelRetreving" />
+    </fragment>
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.example.bookabook.ui.notification.NotificationFragment"
+        android:label="notification_fragment"
+        tools:layout="@layout/notification_fragment">
+        <action
+            android:id="@+id/action_notificationFragment_to_elementDetailsFragment"
+            app:destination="@id/elementDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.bookabook.ui.about.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/about_fragment" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.bookabook.ui.map.MapFragment"
+        android:label="Nearest Library"
+        tools:layout="@layout/map_fragment" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.bookabook.ui.search.SearchFragment"
+        android:label="@string/search"
+        tools:layout="@layout/search_fragment">
+        <action
+            android:id="@+id/action_searchFragment_to_elementDetailsFragment"
+            app:destination="@id/elementDetailsFragment" />
     </fragment>
 </navigation>

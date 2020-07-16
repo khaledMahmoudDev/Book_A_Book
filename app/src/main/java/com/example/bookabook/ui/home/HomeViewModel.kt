@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.bookabook.data.DownloadBooksCallBack
+import com.example.bookabook.data.FavBookCallback
 import com.example.bookabook.data.FireBaseRepo
 import com.example.bookabook.data.OwnerCondition
 import com.example.bookabook.model.BooksModelRetreving
@@ -20,6 +21,8 @@ class HomeViewModel : ViewModel() {
     init {
         getBooksList()
     }
+
+
 
     private fun getBooksList(){
         progressBarVisability.value = true
