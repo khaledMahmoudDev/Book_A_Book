@@ -3,6 +3,7 @@ package com.example.bookabook.ui.addingBook
 import android.app.Dialog
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
@@ -22,6 +23,14 @@ class AddingBooksViewModel : ViewModel() {
     val categoryList: LiveData<ArrayList<String>>
         get() = _categoryList
 
+     var checkedItemList = ArrayList<String>()
+
+
+    var eventToGetCategories = MutableLiveData<Boolean>(false)
+
+
+
+
 
     private var _addingimageString = MutableLiveData<Uri>()
     val addingimageString: LiveData<Uri>
@@ -30,6 +39,21 @@ class AddingBooksViewModel : ViewModel() {
     fun setImageString(imgUri: Uri) {
         _addingimageString.value = imgUri
     }
+
+    var fileName = MutableLiveData<String>("No File Picked")
+    fun setFileProgress(fileProgress: String) {
+        fileName.value = fileProgress
+    }
+
+
+    private var _pickFileString = MutableLiveData<Uri>()
+    val pickFileString: LiveData<Uri>
+        get() = _pickFileString
+
+    fun setFileString(fileUri: Uri) {
+        _pickFileString.value = fileUri
+    }
+
 
 
     private var _startActivityToPickImage = MutableLiveData<Boolean>(false)
@@ -67,18 +91,6 @@ class AddingBooksViewModel : ViewModel() {
         Validation.validationResult(it)
     }
 
-    var availabilityState = MutableLiveData<Boolean>(false)
-    val availabilityText :LiveData<String> = Transformations.map(availabilityState)
-    {
-        if (it == true)
-        {
-            "Available"
-        }else
-        {
-          "Not Available"
-        }
-
-    }
 
     private var _addBookCategories = MutableLiveData<ArrayList<String>>()
     val addBookCategories: LiveData<ArrayList<String>>
@@ -97,6 +109,25 @@ class AddingBooksViewModel : ViewModel() {
             })
         )
     }
+
+
+    private var _eventToPickBookFile = MutableLiveData<Boolean>(false)
+    val eventToPickBookFile : LiveData<Boolean>
+    get() = _eventToPickBookFile
+
+
+    fun PickFile()
+    {
+        _eventToPickBookFile.value = true
+    }
+
+    fun pickFileComplete()
+    {
+        _eventToPickBookFile.value = false
+    }
+
+
+
 
     fun pickImage() {
         _startActivityToPickImage.value = true
@@ -153,6 +184,13 @@ class AddingBooksViewModel : ViewModel() {
     var addBtnEnable = MutableLiveData<Boolean>(true)
 
     fun addBtnClick() {
+        eventToGetCategories.value = true
+        checkedItemList.forEach {
+
+            Log.d("checkedChip", "cc ${it}")
+        }
+
+
         when {
             isBookTitleValid.value != ValidationMSG.Good -> {
                 _addBookState.value = UploadBookState.ErrorBookTitle
@@ -169,6 +207,10 @@ class AddingBooksViewModel : ViewModel() {
             _addingimageString.value == null -> {
                 _addBookState.value = UploadBookState.ErrorBookImage
                 return
+            }
+            _pickFileString.value ==null ->
+            {
+                _addBookState.value = UploadBookState.FailedToUploadBookFile
             }
             else -> {
                 progressBarVisability.value = true
@@ -189,6 +231,7 @@ class AddingBooksViewModel : ViewModel() {
                                 _addBookState.value = UploadBookState.FailedToUploadImage
                             }
                         }
+                        eventToGetCategories.value = false
                         progressBarVisability.value = false
                         addBtnEnable.value = true
                     },
@@ -196,33 +239,14 @@ class AddingBooksViewModel : ViewModel() {
                     addBookTitle,
                     addBookWriter,
                     addBookDescription,
-                    availabilityState.value!!
+                    checkedItemList,
+                    _pickFileString
                 )
 
             }
         }
 
-//        if (isBookTitleValid.value == ValidationMSG.Good &&
-//            isBookWriterValid.value == ValidationMSG.Good &&
-//            isDescriptionValid.value == ValidationMSG.Good &&
-//            _addingimageString.value != null
-//        ) {
-//            Log.d("btnClicked", " value is good")
-//        } else {
-//            Log.d("btnClicked", " value is bad ")
-//        }
     }
-
-//    private fun uploadBook(
-//        _addingimageString: MutableLiveData<Uri>,
-//        addBookTitle: MutableLiveData<String>,
-//        addBookWriter: MutableLiveData<String>,
-//        addBookDescription: MutableLiveData<String>
-//    ) {
-
-//        _addBookState.value = UploadBookState.NoError
-//    }
-
 
 }
 
@@ -233,5 +257,6 @@ enum class UploadBookState {
     ErrorBookImage,
     FailedToUploadBook,
     FailedToUploadImage,
+    FailedToUploadBookFile,
     Uploaded
 }

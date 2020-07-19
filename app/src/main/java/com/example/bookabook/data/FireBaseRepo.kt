@@ -1,7 +1,9 @@
 package com.example.bookabook.data
 
+import android.R.attr.data
 import android.net.Uri
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.example.bookabook.model.BooksModel
 import com.example.bookabook.model.BooksModelRetreving
@@ -17,6 +19,7 @@ import java.text.DateFormat
 import java.text.DateFormat.getDateTimeInstance
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 var database: FirebaseDatabase = FirebaseDatabase.getInstance()
 var storage: FirebaseStorage = FirebaseStorage.getInstance()
@@ -239,11 +242,14 @@ object FireBaseRepo {
         addBookTitle: MutableLiveData<String>,
         addBookWriter: MutableLiveData<String>,
         addBookDescription: MutableLiveData<String>,
-        availability: Boolean
+        checkedItemList: ArrayList<String>,
+        _pickFileString: MutableLiveData<Uri>
     ) {
 
         val ref = storageRef.child("uploads/" + UUID.randomUUID().toString())
         val uploadTask = ref.putFile(_addingimageString.value!!)
+
+
         val urlTask =
             uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
                 if (!task.isSuccessful) {
@@ -261,9 +267,11 @@ object FireBaseRepo {
                         bookDescription = addBookDescription.value!!,
                         bookThumbnail = downloadUri.toString(),
                         bookAddedDate = ServerValue.TIMESTAMP,
-                        bookAvailability = availability,
-                        bookOwnerId = mAuth.currentUser!!.email!!
+                        bookOwnerId = mAuth.currentUser!!.email!!,
+                        bookCategory = checkedItemList,
+                        bookFile = _pickFileString.value.toString()
                     )
+
                     databaseBookRef.child(id).setValue(book).addOnSuccessListener {
                         Log.d("bookFireBase", "added")
                         changeState.onBookUploadStateChanged(BookFireBaseUploadState.BookUploadedSueccessfully)
@@ -271,6 +279,7 @@ object FireBaseRepo {
 
                         changeState.onBookUploadStateChanged(BookFireBaseUploadState.BookFailedToUpload)
                     }
+
 
                 } else {
                     changeState.onBookUploadStateChanged(BookFireBaseUploadState.BookImageFailedToUpload)
@@ -282,6 +291,8 @@ object FireBaseRepo {
 
 
     }
+
+
 
 
     fun getUser(usercallBack: UserCallBack) {
