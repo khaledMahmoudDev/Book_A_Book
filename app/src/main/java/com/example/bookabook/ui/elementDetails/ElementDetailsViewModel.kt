@@ -90,14 +90,14 @@ class ElementDetailsViewModel(book: BooksModelRetreving) : ViewModel() {
     }
 
 
-    lateinit var bookFile : File
+    lateinit var bookFile: File
 
     var openFileNow = MutableLiveData<Boolean>(false)
 
-    fun completeOpenFile()
-    {
+    fun completeOpenFile() {
         openFileNow.value = false
     }
+
     fun downLoadFile() {
 
         Log.d("firebase file", "clicked")
@@ -128,7 +128,22 @@ class ElementDetailsViewModel(book: BooksModelRetreving) : ViewModel() {
         } else {
             Log.d("firebase file", "No File Found")
         }
+    }
 
+    val navigateToSimilarBooks = MutableLiveData<Boolean>(false)
+    fun navigateToSimilarBooksClick()
+    {
+        navigateToSimilarBooks.value = true
+    }
+    fun navigateToSimilarBooksComplete ()
+    {
+        navigateToSimilarBooks.value = false
+    }
+
+
+    fun removeSelectedBook()
+    {
+        FireBaseRepo.removeBook(receivedBook.value!!.id)
 
     }
 

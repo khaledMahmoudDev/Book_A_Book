@@ -24,7 +24,7 @@
     <fragment
         android:id="@+id/favouriteBooks"
         android:name="com.example.bookabook.ui.favouriteBooks.FavouriteBooksFragment"
-        android:label="favourite_books_fragment"
+        android:label="Favourite Books"
         tools:layout="@layout/favourite_books_fragment">
         <action
             android:id="@+id/action_favouriteBooks_to_elementDetailsFragment"
@@ -33,26 +33,21 @@
     <fragment
         android:id="@+id/myBooks"
         android:name="com.example.bookabook.ui.myBooks.MyBooksFragment"
-        android:label="my_books_fragment"
+        android:label="My Books"
         tools:layout="@layout/my_books_fragment">
         <action
             android:id="@+id/action_myBooks_to_elementDetailsFragment"
             app:destination="@id/elementDetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.example.bookabook.ui.settings.SettingsFragment"
-        android:label="settings_fragment"
-        tools:layout="@layout/settings_fragment" />
-    <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.bookabook.ui.profile.ProfileFragment"
-        android:label="profile_fragment"
+        android:label="My Profile"
         tools:layout="@layout/profile_fragment" />
     <fragment
         android:id="@+id/addingBooksFragment"
         android:name="com.example.bookabook.ui.addingBook.AddingBooksFragment"
-        android:label="AddingBooksFragment"
+        android:label="Add Books"
         tools:layout="@layout/adding_books_fragment">
         <action
             android:id="@+id/action_addingBooksFragment_to_homeFragment"
@@ -63,7 +58,7 @@
     <fragment
         android:id="@+id/logInFragment"
         android:name="com.example.bookabook.ui.userAuthentication.logIn.LogInFragment"
-        android:label="LogInFragment"
+        android:label="LogIn"
         tools:layout="@layout/log_in_fragment">
         <action
             android:id="@+id/action_logInFragment_to_signUpFragment"
@@ -72,7 +67,7 @@
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.bookabook.ui.userAuthentication.signUp.SignUpFragment"
-        android:label="SignUpFragment"
+        android:label="SignUp"
         tools:layout="@layout/sign_up_fragment">
         <action
             android:id="@+id/action_signUpFragment_to_logInFragment"
@@ -83,17 +78,20 @@
     <fragment
         android:id="@+id/elementDetailsFragment"
         android:name="com.example.bookabook.ui.elementDetails.ElementDetailsFragment"
-        android:label="ElementDetailsFragment"
+        android:label="Book Details"
         tools:layout="@layout/element_details_fragment">
         <argument
             android:name="clickedBook"
             app:argType="com.example.bookabook.model.BooksModelRetreving" />
+        <action
+            android:id="@+id/action_elementDetailsFragment_to_similarBooksFragment"
+            app:destination="@id/similarBooksFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.example.bookabook.ui.notification.NotificationFragment"
-        android:label="notification_fragment"
-        tools:layout="@layout/notification_fragment">
+        android:name="com.example.bookabook.ui.downloadFiles.DownLoadFilesFragment"
+        android:label="DownLoads"
+        tools:layout="@layout/download_fragment">
         <action
             android:id="@+id/action_notificationFragment_to_elementDetailsFragment"
             app:destination="@id/elementDetailsFragment" />
@@ -104,11 +102,6 @@
         android:label="About"
         tools:layout="@layout/about_fragment" />
     <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.example.bookabook.ui.map.MapFragment"
-        android:label="Nearest Library"
-        tools:layout="@layout/map_fragment" />
-    <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.bookabook.ui.search.SearchFragment"
         android:label="@string/search"
@@ -116,5 +109,19 @@
         <action
             android:id="@+id/action_searchFragment_to_elementDetailsFragment"
             app:destination="@id/elementDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/similarBooksFragment"
+        android:name="com.example.bookabook.ui.similarBooks.SimilarBooksFragment"
+        android:label="Similar Books"
+        tools:layout="@layout/similar_books_fragment" >
+        <argument
+            android:name="clickedBook"
+            app:argType="com.example.bookabook.model.BooksModelRetreving" />
+        <action
+            android:id="@+id/action_similarBooksFragment_to_elementDetailsFragment"
+            app:destination="@id/elementDetailsFragment"
+            app:popUpTo="@id/elementDetailsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

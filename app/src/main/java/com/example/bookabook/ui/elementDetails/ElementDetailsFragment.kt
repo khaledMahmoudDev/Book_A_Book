@@ -4,14 +4,12 @@ import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -20,7 +18,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.bookabook.BuildConfig
 import com.example.bookabook.R
+import com.example.bookabook.data.FireBaseRepo
 import com.example.bookabook.databinding.ElementDetailsFragmentBinding
+import com.example.bookabook.utils.isPermissionGranted
 import com.google.android.material.chip.Chip
 
 class ElementDetailsFragment : Fragment() {
@@ -55,6 +55,8 @@ class ElementDetailsFragment : Fragment() {
                 viewModel.completeNavigateToLogIn()
             }
         })
+
+
         viewModel.openFileNow.observe(viewLifecycleOwner, Observer {
             if (false != it) {
                 var loadFile = viewModel.bookFile
@@ -63,7 +65,8 @@ class ElementDetailsFragment : Fragment() {
                     val bookUri = FileProvider.getUriForFile(
                         requireActivity(),
                         BuildConfig.APPLICATION_ID + ".provider",
-                        loadFile)
+                        loadFile
+                    )
 
                     val intent = Intent(Intent.ACTION_VIEW)
                     intent.setDataAndType(bookUri, "application/pdf")
@@ -101,6 +104,23 @@ class ElementDetailsFragment : Fragment() {
             chipGroup.addView(chip)
         }
 
+        viewModel.navigateToSimilarBooks.observe(viewLifecycleOwner, Observer {
+            if (false != it) {
+                //val action = HomeFragmentDirections.actionHomeFragmentToElementDetailsFragment(it)
+
+                val action =
+                    ElementDetailsFragmentDirections.actionElementDetailsFragmentToSimilarBooksFragment(
+                        book
+                    )
+                findNavController().navigate(action)
+                viewModel.navigateToSimilarBooksComplete()
+            }
+        })
+        binding.DeleteButton.setOnClickListener {
+            FireBaseRepo.removeBook(book.id)
+            findNavController().popBackStack()
+
+        }
 
 
 
@@ -110,27 +130,38 @@ class ElementDetailsFragment : Fragment() {
 
     private fun writePermission() {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            when (ContextCompat.checkSelfPermission(
+        if (isPermissionGranted(
                 requireContext(),
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )) {
-                PackageManager.PERMISSION_GRANTED -> {
-
-                    Log.d("fileClicked", "granted")
-                    viewModel.downLoadFile()
-
-                }
-                else -> {
-                    Log.d("fileClicked", "Not granted")
-                    requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 56)
-                }
-
-            }
-        } else {
+            )
+        ) {
             viewModel.downLoadFile()
+        } else {
+            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 56)
         }
         viewModel.completeAskForPermission()
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            when (ContextCompat.checkSelfPermission(
+//                requireContext(),
+//                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+//            )) {
+//                PackageManager.PERMISSION_GRANTED -> {
+//
+//                    Log.d("fileClicked", "granted")
+//                    viewModel.downLoadFile()
+//
+//                }
+//                else -> {
+//                    Log.d("fileClicked", "Not granted")
+//                    requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 56)
+//                }
+//
+//            }
+//        } else {
+//            viewModel.downLoadFile()
+//        }
+
     }
 
     override fun onRequestPermissionsResult(

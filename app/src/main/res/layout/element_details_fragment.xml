@@ -20,7 +20,12 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/margin_small"
+            app:layout_constraintBottom_toTopOf="@+id/button2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -30,7 +35,7 @@
 
                     android:id="@+id/CoverImageView"
                     android:layout_width="0dp"
-                    android:layout_height="200dp"
+                    android:layout_height="150dp"
                     android:layout_marginTop="24dp"
                     app:layout_constraintDimensionRatio="w,2:3"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -45,6 +50,16 @@
                         app:imageString="@{bookDetailViewModel.receivedBook.bookThumbnail}" />
 
                 </com.google.android.material.card.MaterialCardView>
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/CoverImageView" />
 
                 <TextView
                     android:id="@+id/BookTitleTextView"
@@ -84,8 +99,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/BookAuthorTextView">
 
                     <ImageView
-
-                        android:id="@+id/imageButton"
+                       android:id="@+id/DeleteButton"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginStart="16dp"
@@ -111,7 +125,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/toggleButton2"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/imageButton"
+                        app:layout_constraintStart_toEndOf="@+id/DeleteButton"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_baseline_cloud_download_24" />
 
@@ -158,15 +172,28 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:gravity="start"
+                    android:padding="@dimen/margin_small"
                     android:text="@{bookDetailViewModel.receivedBook.bookDescription}"
                     android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/bookDetailCategoryChipGroup"
-                    tools:text="Details Details Details Details Details Details Details Details Details Details Details Details  Details Details Details Details Details Details  Details Details Details Details Details Details  Details Details Details Details Details Details Details Details Details Details Details Details  Details Details Details Details Details Details  Details Details Details Details Details Details  Details Details Details Details Details Details  Details Details Details Details Details Details  Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details " />
+                    tools:text="Details Details Details Details  Details Details Details Details Details Details  Details Details Details Details Details Details  Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details " />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <Button
+            android:id="@+id/button2"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            android:onClick="@{()-> bookDetailViewModel.navigateToSimilarBooksClick()}"
+            android:text="More Similar Books"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

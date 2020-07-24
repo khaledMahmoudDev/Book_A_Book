@@ -52,6 +52,7 @@ class ProfileFragment : Fragment() {
                 when (authenticationState) {
                     LogInViewModel.AuthenticationState.AUTHENTICATED -> {
                         showWelcomeMessage()
+                        viewModel.getUserNow()
                     }
                     LogInViewModel.AuthenticationState.UNAUTHENTICATED -> {
                         Log.d("stateLogOut", "observer entered unAuth")
@@ -70,30 +71,14 @@ class ProfileFragment : Fragment() {
         val binding = ProfileFragmentBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.profileViewModel = viewModel
-        Log.d("stateLogOut", "ONCreatedView")
 
-        profileFragmentPagerAdapter = ProfileFragmentPagerAdapter(this)
-        binding.profileViewPager.adapter = profileFragmentPagerAdapter
 
-        configViewPagerWithTabLayout(binding.tabLayout, binding.profileViewPager)
+
 
         return binding.root
     }
 
 
-    private fun configViewPagerWithTabLayout(tabLayout: TabLayout, viewPager: ViewPager2) {
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = when (position) {
-                0 -> {
-                    "My Books"
-                }
-                else -> {
-                    "Fav Books"
-                }
-            }
-
-        }.attach()
-    }
 
     private fun showWelcomeMessage() {
         Toast.makeText(context, "welcome", Toast.LENGTH_LONG).show()

@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.bookabook.R
+import com.example.bookabook.adapter.BookFileAdapter
 import com.example.bookabook.adapter.HomeBookListAdapter
 import com.example.bookabook.adapter.ProfileBookListAdapter
 import com.example.bookabook.model.BooksModelRetreving
+import com.example.bookabook.model.FileModel
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: Uri?) {
@@ -69,6 +71,12 @@ fun bindBookList(recyclerView: RecyclerView, data: List<BooksModelRetreving>?) {
 @BindingAdapter("BookListDataProfile")
 fun bindBookListProfile(recyclerView: RecyclerView, data: List<BooksModelRetreving>?) {
     val adapter = recyclerView.adapter as ProfileBookListAdapter
+    adapter.submitList(data)
+}
+
+@BindingAdapter("BookFileDataList")
+fun BookFileDataList(recyclerView: RecyclerView, data: List<FileModel>?) {
+    val adapter = recyclerView.adapter as BookFileAdapter
     adapter.submitList(data)
 }
 

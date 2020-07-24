@@ -22,6 +22,7 @@ class HomeBookListAdapter(val bookElementClickListener: BookElementClickListener
 
     }
 
+
     class HomeBookListViewHolder private constructor(val binding: BookHomeRowElementBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
@@ -44,9 +45,13 @@ class HomeBookListAdapter(val bookElementClickListener: BookElementClickListener
     }
 }
 
+
+
 class BookElementClickListener(val bookChangeClickListener: (book: BooksModelRetreving) -> Unit) {
     fun onBookClick(book: BooksModelRetreving) = bookChangeClickListener(book)
 }
+
+
 
 class HomeListDiffUtil : DiffUtil.ItemCallback<BooksModelRetreving>() {
     override fun areItemsTheSame(

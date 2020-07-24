@@ -4,17 +4,13 @@
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="Books" />
-    <item
-        android:id="@+id/mapFragment"
-        android:icon="@drawable/ic_baseline_map_24"
-        android:title="Nearest Library" />
+        android:title="Home" />
     <item android:title="Personal">
         <menu>
             <item
                 android:id="@+id/profileFragment"
                 android:icon="@drawable/ic_baseline_person_24"
-                android:title="Profile" />
+                android:title="My Profile" />
             <item
                 android:id="@+id/favouriteBooks"
                 android:icon="@drawable/ic_baseline_favorite_24"
@@ -30,15 +26,11 @@
             <item
                 android:id="@+id/notificationFragment"
                 android:icon="@drawable/ic_baseline_notifications_24"
-                android:title="Notification" />
+                android:title="Downloads" />
             <item
                 android:id="@+id/aboutFragment"
                 android:icon="@drawable/ic_baseline_info_24"
                 android:title="About" />
-            <item
-                android:id="@+id/settingsFragment"
-                android:icon="@drawable/ic_baseline_settings_24"
-                android:title="Settings" />
         </menu>
     </item>
 

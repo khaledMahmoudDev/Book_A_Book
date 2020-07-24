@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.bookabook.ui.downloadFiles.DownLoadFilesViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.downloadFiles.DownLoadFilesFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:background="@color/backGroundOff"
+            android:id="@+id/fileListRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:BookFileDataList="@{viewModel.fileList}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="16"
+            tools:listitem="@layout/download_files_element_row" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

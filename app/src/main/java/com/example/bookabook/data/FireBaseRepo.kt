@@ -154,6 +154,11 @@ object FireBaseRepo {
         databaseBooksFavouriteRef.child(mAuth.currentUser!!.uid).child(bookId).removeValue()
     }
 
+    fun removeBook(bookId: String) {
+        Log.d("fav", "fire remove")
+        databaseBookRef.child(bookId).removeValue()
+    }
+
 
 
     fun getAllFavBooks(favouriteBooksCallBack: FavouriteBooksCallBack) {
@@ -296,8 +301,8 @@ object FireBaseRepo {
 
 
     fun getUser(usercallBack: UserCallBack) {
-        lateinit var user: User
-        databaseUserRef.addValueEventListener(object : ValueEventListener {
+
+        databaseUserRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 TODO("Not yet implemented")
             }
@@ -307,9 +312,9 @@ object FireBaseRepo {
                 for (n in p0.children) {
                     val us = n.getValue(User::class.java)
                     if (mAuth.currentUser!!.uid == us!!.id) {
-                        user = User()
-                        usercallBack.onGettingUser(user)
-                        Log.d("fav", "user is $user")
+
+                        usercallBack.onGettingUser(us)
+                        Log.d("fav", "user is $us")
                     }
                 }
             }
@@ -339,12 +344,12 @@ object FireBaseRepo {
                     Log.d("timeadded ", " time $days avail ${book.isNew}")
                     when (ownerCondition) {
                         OwnerCondition.AllUsers -> {
-                            book.let { bookList.add(it) }
+                            book.let { bookList.add(0,it) }
                         }
                         OwnerCondition.CurrentUser -> {
                             book.let {
                                 if (it.bookOwnerId == mAuth.currentUser!!.email) {
-                                    bookList.add(it)
+                                    bookList.add(0,it)
                                 }
                             }
                         }
