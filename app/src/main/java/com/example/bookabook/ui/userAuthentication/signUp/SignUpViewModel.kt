@@ -27,15 +27,6 @@ class SignUpViewModel : ViewModel() {
     val userEmailError: LiveData<String> = Transformations.map(isUserEmailValid) {
         Validation.validationResult(it)
     }
-
-    var addUserPhone = MutableLiveData<String>()
-    private val isUserPhoneValid: LiveData<ValidationMSG> = Transformations.map(addUserPhone) {
-        Validation.validatePhone(it)
-    }
-    val userPhoneError: LiveData<String> = Transformations.map(isUserPhoneValid) {
-        Validation.validationResult(it)
-    }
-
     var addUserPassword = MutableLiveData<String>()
     private val isUserPasswordValid: LiveData<ValidationMSG> =
         Transformations.map(addUserPassword) {
@@ -65,10 +56,6 @@ class SignUpViewModel : ViewModel() {
                 _registerState.value = SignUpStateState.UserNameNotValid
                 return
             }
-            isUserPhoneValid.value != ValidationMSG.Good -> {
-                _registerState.value = SignUpStateState.PhoneNumberNotValid
-                return
-            }
             isUserPasswordValid.value != ValidationMSG.Good -> {
                 _registerState.value = SignUpStateState.PasswordNotValid
                 return
@@ -79,7 +66,6 @@ class SignUpViewModel : ViewModel() {
                 FireBaseRepo.register(
                     email = addUserEmail.value!!,
                     password = addUserPassword.value!!,
-                    phoneNumber = addUserPhone.value!!,
                     name = addUserName.value!!,
                     registerCallBack = RegisterCallBack {
                         when (it) {

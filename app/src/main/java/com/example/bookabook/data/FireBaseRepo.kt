@@ -42,14 +42,13 @@ object FireBaseRepo {
         email: String,
         password: String,
         name: String,
-        phoneNumber: String,
         registerCallBack: RegisterCallBack
     ) {
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 task.addOnSuccessListener { it ->
                     val id = it.user!!.uid
-                    createUserOnDB(email, name, phoneNumber, id, RegisterCallBack {
+                    createUserOnDB(email, name,id, RegisterCallBack {
                         when (it) {
                             RegisterState.UserSavedSuccessfully -> {
                                 registerCallBack.onLogInStateChange(RegisterState.RegisteredSuccessfully)
@@ -73,12 +72,11 @@ object FireBaseRepo {
     private fun createUserOnDB(
         email: String,
         name: String,
-        phoneNumber: String,
         id: String,
         registerCallBack: RegisterCallBack
     ) {
         //  val id = databaseUserRef.push().key.toString()
-        var user = User(userName = name, email = email, phoneNumber = phoneNumber, id = id)
+        var user = User(userName = name, email = email, id = id)
         databaseUserRef.child(id).setValue(user).addOnSuccessListener {
             sendVerificationEmail(
                 RegisterCallBack {

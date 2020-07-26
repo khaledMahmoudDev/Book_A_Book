@@ -67,9 +67,9 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/aaa"
-                        android:singleLine="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:singleLine="true"
                         android:text="@={signUpViewModel.addUserName}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,32 +98,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/editTextTextUsePhoneNumber"
-                    style="@style/MyAppEditText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:hint="@string/phone_number"
-                    android:inputType="phone"
-                    android:lines="1"
-                    android:paddingStart="@dimen/editTextPadding"
-                    android:paddingEnd="@dimen/editTextPadding"
-                    app:counterMaxLength="11"
-                    app:error="@{signUpViewModel.userPhoneError}"
-                    app:helperText="ex:01234567890"
-                    app:layout_constraintEnd_toEndOf="@+id/editTextTextUseEmail"
-                    app:layout_constraintStart_toStartOf="@+id/editTextTextUseEmail"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextTextUseEmail">
-
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:text="@={signUpViewModel.addUserPhone}" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/editTextTextUsePassword"
                     style="@style/MyAppEditText"
                     android:layout_width="0dp"
@@ -135,15 +109,15 @@
                     android:paddingStart="@dimen/editTextPadding"
                     android:paddingEnd="@dimen/editTextPadding"
                     app:error="@{signUpViewModel.userPasswordError}"
-                    app:layout_constraintEnd_toEndOf="@+id/editTextTextUsePhoneNumber"
-                    app:layout_constraintStart_toStartOf="@+id/editTextTextUsePhoneNumber"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextTextUsePhoneNumber"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextTextUseEmail"
+                    app:layout_constraintStart_toStartOf="@+id/editTextTextUseEmail"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextTextUseEmail"
                     app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:singleLine="true"
                         android:layout_height="wrap_content"
+                        android:singleLine="true"
                         android:text="@={signUpViewModel.addUserPassword}" />
 
                 </com.google.android.material.textfield.TextInputLayout>

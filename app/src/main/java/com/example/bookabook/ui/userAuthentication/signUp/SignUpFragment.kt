@@ -44,10 +44,6 @@ class SignUpFragment : Fragment() {
                         binding.editTextTextUseEmail.requestFocus()
 
                     }
-                    SignUpStateState.PhoneNumberNotValid -> {
-                        toastMessage = "Please Enter Valid Phone Number"
-                        binding.editTextTextUsePhoneNumber.requestFocus()
-                    }
                     SignUpStateState.PasswordNotValid -> {
                         toastMessage = "Please Enter Valid Password"
                         binding.editTextTextUsePassword.requestFocus()
