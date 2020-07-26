@@ -19,4 +19,37 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="favourite">Favourite</string>
+    <string name="Sign_up_message">Register to be able of sharing your books</string>
+    <string name="full_name">Full Name</string>
+    <string name="your_email">Your Email</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="password">password</string>
+    <string name="register">Register</string>
+    <string name="AboutWelcome">Welcome :</string>
+    <string name="signout">SignOut</string>
+    <string name="log_in_to_message">Log In To Your Account</string>
+    <string name="email_address">Email Address</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="add">add</string>
+    <string name="send">Send</string>
+    <string name="cancel">Cancel</string>
+    <string name="favouriteBookMessage">Sorry \n You did not Like any Book yet</string>
+    <string name="more_similar_books">More Similar Books</string>
+    <string name="downloadFragment_nofile_meassage">Sorry \n You did not download any files yet</string>
+    <string name="pick_an_image">Pick an Image</string>
+    <string name="pick_a_file">Pick a File</string>
+    <string name="enter_book_name">Enter Book Name</string>
+    <string name="enter_book_writer_name">Enter Book Writer Name</string>
+    <string name="enter_book_description">Enter Book Description</string>
+    <string name="select_category">Select Category</string>
+    <string name="add_another_category">Add another category</string>
+    <string name="add_book">Add Book</string>
+    <string name="enter_category">Enter Category</string>
+    <string name="ok">Ok</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="no_internet_message">Wake up your Internet connection to access the application</string>
+    <string name="about_message">Application to Help You Share your Books with Your Friends.</string>
+    <string name="about_sub_message">Upload...Share...DownLoad</string>
+    <string name="contact_us_message">Contact Us: \n khalid.mahmoud07@gmail.com</string>
 </resources>

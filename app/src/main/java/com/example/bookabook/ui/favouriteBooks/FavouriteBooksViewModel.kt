@@ -3,6 +3,7 @@ package com.example.bookabook.ui.favouriteBooks
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.bookabook.data.*
 import com.example.bookabook.model.BooksModelRetreving
@@ -12,6 +13,10 @@ class FavouriteBooksViewModel : ViewModel() {
     val booklist : LiveData<ArrayList<BooksModelRetreving>>
         get() = _bookList
 
+
+    val isEmpty = Transformations.map(_bookList){
+        it.isNullOrEmpty()
+    }
 
     init {
     }

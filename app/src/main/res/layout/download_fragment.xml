@@ -12,15 +12,16 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.downloadFiles.DownLoadFilesFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:background="@color/backGroundOff"
             android:id="@+id/fileListRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/backGroundOff"
             app:BookFileDataList="@{viewModel.fileList}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -29,6 +30,34 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:itemCount="16"
             tools:listitem="@layout/download_files_element_row" />
+
+        <LinearLayout
+
+            android:id="@+id/downloadFilesNotFound"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/aboutHeight"
+                android:layout_height="@dimen/aboutHeight"
+                android:src="@drawable/nodata" />
+
+            <TextView
+                android:layout_margin="@dimen/margin_normal"
+                style="@style/TextItemTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/downloadFragment_nofile_meassage"
+                android:textSize="@dimen/text_large" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

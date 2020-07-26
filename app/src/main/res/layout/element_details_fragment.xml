@@ -19,6 +19,7 @@
         tools:context=".ui.settings.SettingsFragment">
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView4"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/margin_small"
@@ -35,8 +36,8 @@
 
                     android:id="@+id/CoverImageView"
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_height="@dimen/profileImageheight"
+                    android:layout_marginTop="@dimen/margin_medium"
                     app:layout_constraintDimensionRatio="w,2:3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -66,8 +67,8 @@
                     style="@style/TextItemTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_medium"
                     android:text="@{bookDetailViewModel.receivedBook.bookTitle}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -79,8 +80,8 @@
                     style="@style/TextItemSubTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:text="@{bookDetailViewModel.receivedBook.bookWriter}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -91,19 +92,19 @@
                     android:id="@+id/divider1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_marginEnd="@dimen/margin_normal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/BookAuthorTextView">
 
                     <ImageView
-                       android:id="@+id/DeleteButton"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
+                        android:id="@+id/DeleteButton"
+                        android:layout_width="@dimen/imageButtonwidth"
+                        android:layout_height="@dimen/imageButtonwidth"
+                        android:layout_marginStart="@dimen/margin_normal"
+                        android:layout_marginEnd="@dimen/margin_normal"
                         android:background="@android:color/transparent"
                         app:hideIfFalse="@{bookDetailViewModel.sameUser}"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -116,10 +117,10 @@
 
                     <ImageView
                         android:id="@+id/imageButton2"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_width="@dimen/imageButtonwidth"
+                        android:layout_height="@dimen/imageButtonwidth"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_small"
                         android:background="@android:color/transparent"
                         android:onClick="@{()-> bookDetailViewModel.checkPermissionForDownLoad()}"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -132,14 +133,13 @@
                     <ToggleButton
 
                         android:id="@+id/toggleButton2"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_width="@dimen/imageButtonwidth"
+                        android:layout_height="@dimen/imageButtonwidth"
+                        android:layout_marginStart="@dimen/margin_normal"
+                        android:layout_marginEnd="@dimen/margin_normal"
                         android:background="@drawable/like_selector"
                         android:checked="@={bookDetailViewModel.isBookFav}"
                         android:onClick="@{()->bookDetailViewModel.addToFav()}"
-                        android:text="ToggleButton"
                         android:textOff=""
                         android:textOn=""
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -155,7 +155,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_normal"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="@dimen/margin_normal"
                     android:layout_marginEnd="@dimen/margin_normal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -169,8 +169,8 @@
                     style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_normal"
                     android:gravity="start"
                     android:padding="@dimen/margin_small"
                     android:text="@{bookDetailViewModel.receivedBook.bookDescription}"
@@ -180,10 +180,19 @@
                     app:layout_constraintTop_toBottomOf="@+id/bookDetailCategoryChipGroup"
                     tools:text="Details Details Details Details  Details Details Details Details Details Details  Details Details Details Details Details Details  Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details Details " />
 
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@{bookDetailViewModel.downLoadPercentage}"
+                    app:layout_constraintEnd_toEndOf="@+id/divider1"
+                    app:layout_constraintStart_toStartOf="@+id/divider1"
+                    app:layout_constraintTop_toBottomOf="@+id/divider1" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
-
         <Button
             android:id="@+id/button2"
             style="@style/Widget.MaterialComponents.Button"
@@ -191,9 +200,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_normal"
             android:onClick="@{()-> bookDetailViewModel.navigateToSimilarBooksClick()}"
-            android:text="More Similar Books"
+            android:text="@string/more_similar_books"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -23,10 +23,36 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/margin_Super_tiny"
             android:background="@color/backGroundOff"
-            android:text="Favourite"
             app:BookListDataProfile="@{myFavBooksViewModel.booklist}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/profile_book_element" />
+
+        <LinearLayout
+            android:id="@+id/favouriteBooksNotFound"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/aboutHeight"
+                android:layout_height="@dimen/aboutHeight"
+                android:src="@drawable/nodata" />
+
+            <TextView
+                style="@style/TextItemTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_normal"
+                android:text="@string/favouriteBookMessage"
+                android:textSize="@dimen/text_large" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

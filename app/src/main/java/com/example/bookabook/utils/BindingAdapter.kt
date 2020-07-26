@@ -54,7 +54,7 @@ fun bindHideIfFalse(view: View, isFalse: Boolean) {
 
 @BindingAdapter("app:hideIfTrue")
 fun bindHideIfTrue(view: View, isFalse: Boolean) {
-    view.visibility = if (isFalse) View.INVISIBLE else View.VISIBLE
+    view.visibility = if (isFalse) View.GONE else View.VISIBLE
 }
 
 @BindingAdapter("app:enableIfTrue")

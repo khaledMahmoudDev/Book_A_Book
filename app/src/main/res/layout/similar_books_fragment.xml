@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/margin_Super_tiny"
             android:background="@color/backGroundOff"
-            android:text="Favourite"
+            android:text="@string/favourite"
             app:BookListDataProfile="@{viewModel.bookList}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/profile_book_element" />

@@ -22,7 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/margin_Super_tiny"
-            android:text="Favourite"
             app:BookListDataProfile="@{searchViewModel.result}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/profile_book_element" />

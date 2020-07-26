@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.example.bookabook.model.FileModel
 import com.example.bookabook.utils.sendBookNotification
 import java.io.File
@@ -14,6 +15,10 @@ import java.io.File
 class DownLoadFilesViewModel(val app: Application) : AndroidViewModel(app) {
 
     val fileList = MutableLiveData<ArrayList<FileModel>>()
+
+    val isEmpty = Transformations.map(fileList){
+        it.isNullOrEmpty()
+    }
 
 
      fun search_Dir(dir: File) {
@@ -39,15 +44,4 @@ class DownLoadFilesViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
-
-
-    fun sendNow() {
-        Log.d("click", "Clicked")
-        val notificationManager = ContextCompat.getSystemService(
-            app,
-            NotificationManager::class.java
-        ) as NotificationManager
-        notificationManager.sendBookNotification("hellow world 5ara", app)
-
-    }
 }

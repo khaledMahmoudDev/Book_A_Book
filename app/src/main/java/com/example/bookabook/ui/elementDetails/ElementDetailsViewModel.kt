@@ -97,9 +97,9 @@ class ElementDetailsViewModel(book: BooksModelRetreving) : ViewModel() {
     fun completeOpenFile() {
         openFileNow.value = false
     }
+    val downLoadPercentage = MutableLiveData<String>()
 
     fun downLoadFile() {
-
         Log.d("firebase file", "clicked")
         if (receivedBook.value!!.bookFile.isNotEmpty()) {
             val ref = storage.getReferenceFromUrl(receivedBook.value!!.bookFile)
@@ -114,18 +114,19 @@ class ElementDetailsViewModel(book: BooksModelRetreving) : ViewModel() {
                 .addOnSuccessListener {
                     bookFile = localFile
                     openFileNow.value = true
+
                     Log.d("firebase file", "local tem file created  created $localFile")
                 }.addOnFailureListener {
 
                     Log.d("firebase file", "Failure")
                 }.addOnProgressListener {
-
                     val progress = ((100.0 * it.bytesTransferred) / it.totalByteCount).toInt()
+                    downLoadPercentage.value = "$progress %"
 
-                    Log.d("firebase file", "Upload is $progress% done")
 
                 }
         } else {
+            downLoadPercentage.value = "No File Found"
             Log.d("firebase file", "No File Found")
         }
     }

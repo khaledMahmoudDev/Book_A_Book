@@ -40,7 +40,7 @@
                     android:layout_marginStart="@dimen/margin_medium"
                     android:layout_marginTop="@dimen/margin_large"
                     android:layout_marginEnd="@dimen/margin_medium"
-                    android:text="Log In To Your Account"
+                    android:text="@string/log_in_to_message"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -53,7 +53,7 @@
                     android:layout_marginStart="@dimen/margin_normal"
                     android:layout_marginTop="@dimen/margin_large"
                     android:layout_marginEnd="@dimen/margin_normal"
-                    android:hint="Email Address"
+                    android:hint="@string/email_address"
                     android:inputType="textEmailAddress"
                     app:error="@{logInViewModel.userEmailError}"
                     app:helperText="ex: Ahmed@test.com"
@@ -78,7 +78,7 @@
                     android:layout_marginStart="@dimen/margin_normal"
                     android:layout_marginTop="@dimen/margin_normal"
                     android:layout_marginEnd="@dimen/margin_normal"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     android:inputType="textPassword"
                     app:error="@{logInViewModel.userPasswordError}"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
                     android:onClick="@{()-> logInViewModel.forgetPasswordShowDialog(context)}"
-                    android:text="Forgot Password?"
+                    android:text="@string/forgot_password"
                     app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"
                     app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 

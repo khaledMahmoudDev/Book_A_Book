@@ -58,6 +58,16 @@ class FavouriteBooksFragment : Fragment() {
                 FavouriteBooksFragmentDirections.actionFavouriteBooksToElementDetailsFragment(it)
             findNavController().navigate(action)
         })
+
+        viewModel.isEmpty.observe(viewLifecycleOwner, Observer {
+            if (it == true)
+            {
+                binding.favouriteBooksNotFound.visibility= View.VISIBLE
+            }else
+            {
+                binding.favouriteBooksNotFound.visibility = View.GONE
+            }
+        })
         return binding.root
 
     }

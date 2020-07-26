@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.bookabook.BuildConfig
 import com.example.bookabook.adapter.BookFileAdapter
@@ -75,6 +76,16 @@ class DownLoadFilesFragment : Fragment() {
 
         })
 
+
+        viewModel.isEmpty.observe(viewLifecycleOwner, Observer {
+            if (it == true)
+            {
+                binding.downloadFilesNotFound.visibility = View.VISIBLE
+            }else
+            {
+                binding.downloadFilesNotFound.visibility = View.GONE
+            }
+        })
 
         // createChannel("bookChannelId", "channelNameBook")
         return binding.root

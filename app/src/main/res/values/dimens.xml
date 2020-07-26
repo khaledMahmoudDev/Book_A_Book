@@ -49,6 +49,14 @@
     <dimen name="ButtonHeight">40dp</dimen>
     <dimen name="signUpLogoHeight">150dp</dimen>
     <dimen name="element_linear_geight">120dp</dimen>
+    <dimen name="aboutHeight">300dp</dimen>
+    <dimen name="profileImageheight">150dp</dimen>
+    <dimen name="marginStartRowElement">90dp</dimen>
+    <dimen name="margin25">25dp</dimen>
+    <dimen name="imageButtonwidth">40dp</dimen>
+    <dimen name="elementHeight100">100dp</dimen>
+    <dimen name="element_width75">75dp</dimen>
+    <dimen name="image_width200">200dp</dimen>
 
 
 </resources>
