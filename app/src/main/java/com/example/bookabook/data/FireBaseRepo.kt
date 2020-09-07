@@ -1,13 +1,14 @@
 package com.example.bookabook.data
 
-import android.R.attr.data
 import android.net.Uri
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.example.bookabook.model.BooksModel
 import com.example.bookabook.model.BooksModelRetreving
 import com.example.bookabook.model.User
+import com.example.bookabook.model.fcm.DataMessage
+import com.example.bookabook.model.fcm.FireBaseCloudMessage
+import com.example.bookabook.network.FCMClient
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -15,10 +16,15 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.DateFormat
 import java.text.DateFormat.getDateTimeInstance
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 var database: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -28,6 +34,7 @@ var storageRef: StorageReference = storage.reference
 
 
 object FireBaseRepo {
+    private const val TAG = "FireBaseRepo"
 
     var databaseCategoryRef: DatabaseReference = database.getReference("Categories")
     var databaseBookRef: DatabaseReference = database.getReference("Book")
@@ -48,7 +55,7 @@ object FireBaseRepo {
             .addOnCompleteListener { task ->
                 task.addOnSuccessListener { it ->
                     val id = it.user!!.uid
-                    createUserOnDB(email, name,id, RegisterCallBack {
+                    createUserOnDB(email, name, id, RegisterCallBack {
                         when (it) {
                             RegisterState.UserSavedSuccessfully -> {
                                 registerCallBack.onLogInStateChange(RegisterState.RegisteredSuccessfully)
@@ -158,7 +165,6 @@ object FireBaseRepo {
     }
 
 
-
     fun getAllFavBooks(favouriteBooksCallBack: FavouriteBooksCallBack) {
         databaseBooksFavouriteRef.child(mAuth.currentUser!!.uid)
             .addValueEventListener(object : ValueEventListener {
@@ -180,7 +186,7 @@ object FireBaseRepo {
             })
     }
 
-//
+    //
 //    fun getAddedBook(bookCallBack : FavBookCallback)
 //    {
 //        databaseBookRef.addChildEventListener(object: ChildEventListener{
@@ -278,6 +284,7 @@ object FireBaseRepo {
                     databaseBookRef.child(id).setValue(book).addOnSuccessListener {
                         Log.d("bookFireBase", "added")
                         changeState.onBookUploadStateChanged(BookFireBaseUploadState.BookUploadedSueccessfully)
+                        sendNotifcaion(book)
                     }.addOnFailureListener {
 
                         changeState.onBookUploadStateChanged(BookFireBaseUploadState.BookFailedToUpload)
@@ -295,7 +302,38 @@ object FireBaseRepo {
 
     }
 
+    private fun sendNotifcaion(book: BooksModel) {
+        val headers: HashMap<String, String> = HashMap()
+        headers.put("Content-Type", "application/json")
+        headers.put(
+            "Authorization",
+            "key=AAAA1fON-EU:APA91bFdJ525H0gM7fu8vhoZbO2B5unN1nZU5b5ulqu3eE1ild1KCgS2IvD6QvBjD2nUHgYgnVhdzmYYu6z4JDlv_BMAC0Jwq3bLFdyLHazH5KEo_rDX_qmiVZ8-WvyMP4w9BSN1RElT"
+        )
 
+        val data = DataMessage(
+            id = book.id,
+            bookTitle = book.bookTitle,
+            bookWriter = book.bookWriter,
+            bookThumbnail = book.bookThumbnail
+        )
+        val messageBody = FireBaseCloudMessage("/topics/NEW_BOOK", data)
+
+
+        val call = FCMClient.fcmMessage.sendNewPostNotification(headers, messageBody)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val url = call.request().url().toString()
+                val body = call.request().body().toString()
+                val headrs = call.request().headers().toString()
+                Log.d(TAG, "onResponse: sent   \n url $url \n $body \n $headrs")
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d(TAG, "onResponse: failed")
+            }
+
+        })
+    }
 
 
     fun getUser(usercallBack: UserCallBack) {
@@ -342,12 +380,12 @@ object FireBaseRepo {
                     Log.d("timeadded ", " time $days avail ${book.isNew}")
                     when (ownerCondition) {
                         OwnerCondition.AllUsers -> {
-                            book.let { bookList.add(0,it) }
+                            book.let { bookList.add(0, it) }
                         }
                         OwnerCondition.CurrentUser -> {
                             book.let {
                                 if (it.bookOwnerId == mAuth.currentUser!!.email) {
-                                    bookList.add(0,it)
+                                    bookList.add(0, it)
                                 }
                             }
                         }
@@ -422,7 +460,7 @@ open class LogInCallBack(val logInState: (state: LogInState) -> Unit) {
 
 
 class FavBookCallback(val dataChanged: (data: BooksModelRetreving) -> Unit) {
-    fun onBookRetrievedSuccessFully( dataChange :BooksModelRetreving) = dataChanged(dataChange)
+    fun onBookRetrievedSuccessFully(dataChange: BooksModelRetreving) = dataChanged(dataChange)
 
 }
 

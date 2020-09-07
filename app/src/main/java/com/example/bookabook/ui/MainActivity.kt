@@ -17,8 +17,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.bookabook.R
 import com.example.bookabook.databinding.ActivityMainBinding
+import com.example.bookabook.model.fcm.FireBaseCloudMessage
+import com.example.bookabook.utils.NEW_BOOK_TOPIC
 import com.example.bookabook.utils.NetworkConnection
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : AppCompatActivity() {
 
@@ -71,9 +74,16 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBar(navController, appBarConfiguration)
 
+        subscribeToTopic()
+
         //    setupBottomNavMenu(navController)
 
 
+    }
+
+    private fun subscribeToTopic() {
+
+        FirebaseMessaging.getInstance().subscribeToTopic(NEW_BOOK_TOPIC)
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu?): Boolean {

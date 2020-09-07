@@ -221,6 +221,8 @@ class AddingBooksViewModel : ViewModel() {
                             BookFireBaseUploadState.BookUploadedSueccessfully -> {
 
                                 _addBookState.value = UploadBookState.Uploaded
+
+
                             }
                             BookFireBaseUploadState.BookFailedToUpload -> {
 
@@ -247,6 +249,8 @@ class AddingBooksViewModel : ViewModel() {
         }
 
     }
+
+
 
 }
 
