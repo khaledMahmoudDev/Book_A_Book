@@ -49,12 +49,12 @@ fun bindImageString(imgView: ImageView, imgString: String?) {
 
 @BindingAdapter("app:hideIfFalse")
 fun bindHideIfFalse(view: View, isFalse: Boolean) {
-    view.visibility = if (!isFalse) View.GONE else View.VISIBLE
+    view.visibility = if (!isFalse) View.INVISIBLE else View.VISIBLE
 }
 
 @BindingAdapter("app:hideIfTrue")
 fun bindHideIfTrue(view: View, isFalse: Boolean) {
-    view.visibility = if (isFalse) View.GONE else View.VISIBLE
+    view.visibility = if (isFalse) View.INVISIBLE else View.VISIBLE
 }
 
 @BindingAdapter("app:enableIfTrue")

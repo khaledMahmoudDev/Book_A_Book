@@ -11,6 +11,7 @@ import com.example.bookabook.R
 import com.example.bookabook.adapter.BookElementClickListener
 import com.example.bookabook.adapter.HomeBookListAdapter
 import com.example.bookabook.databinding.HomeFragmentBinding
+import com.example.bookabook.utils.createChannel
 
 
 class HomeFragment : Fragment() {
@@ -30,7 +31,14 @@ class HomeFragment : Fragment() {
 
         binding.homeViewModel = viewModel
 
-           setHasOptionsMenu(true)
+        setHasOptionsMenu(true)
+
+        createChannel(
+            requireActivity().getString(R.string.newBookChannelId),
+            "New Book",
+            "newly Added Books",
+            requireActivity()
+        )
 
         binding.homeBookRecycler.adapter = HomeBookListAdapter(BookElementClickListener {
             Toast.makeText(context, it.bookTitle, Toast.LENGTH_LONG).show()
